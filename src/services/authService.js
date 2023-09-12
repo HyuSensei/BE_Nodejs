@@ -70,6 +70,7 @@ const registerNewUser = async (dataRegister) => {
       username: dataRegister.username,
       password: hashedPassword,
       phone: dataRegister.phone,
+      RoleId: 3,
     });
     return {
       success: true,

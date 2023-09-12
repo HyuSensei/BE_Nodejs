@@ -34,7 +34,7 @@ const storeNewProduct = async (dataStore) => {
 const showDetailProduct = async (dataProduct) => {
   try {
     let data = await db.Product.findOne({
-      where: dataProduct.id,
+      where: { id: dataProduct },
     });
     return {
       success: true,

@@ -37,16 +37,32 @@ const checkLogin = (req, res, next) => {
     if (decoded) {
       next();
     } else {
-      return res.status(401).json({
+      return res.json({
         success: false,
         message: "Vui lòng đăng nhập !",
       });
     }
   } else {
-    return res.status(401).json({
+    return res.json({
       success: false,
       message: "Vui lòng đăng nhập !",
     });
+  }
+};
+
+const checkLoginUser = (req, res) => {
+  let cookie = req.cookies;
+  let erro = req.flash("erro");
+  if (cookie && cookie.jwt) {
+    let token = cookie.jwt;
+    let decoded = verifyToken(token);
+    if (decoded) {
+      return res.redirect("/");
+    } else {
+      return res.render("user/login.ejs", { erro });
+    }
+  } else {
+    return res.render("user/login.ejs", { erro });
   }
 };
 
@@ -67,11 +83,17 @@ const checkPremission = async (req, res, next) => {
   if (user.Role.name === "Admin" || user.Role.name === "SuperAdmin") {
     next();
   } else {
-    return res.status(401).json({
+    return res.json({
       success: false,
       message: "Bạn không có quyền truy cập !",
     });
   }
 };
 
-module.exports = { createJWT, verifyToken, checkLogin, checkPremission };
+module.exports = {
+  createJWT,
+  verifyToken,
+  checkLogin,
+  checkPremission,
+  checkLoginUser,
+};
