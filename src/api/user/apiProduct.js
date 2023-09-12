@@ -1,8 +1,11 @@
 const axios = require("axios");
+require("dotenv").config();
 const getProductHome1 = async (req, res) => {
   try {
-    let dataProducts = await axios.get(`http://localhost:8081/api/v1/products`);
-    //console.log("Data:", dataProducts.data.data);
+    //console.log("ssss:", process.env.BASE_URL + `products`)
+    let dataProducts = await axios.get(process.env.BASE_URL +`products`);
+    // console.log("Data:", dataProducts.data.data);
+    
     let products = dataProducts.data.data.product;
     return res.render("user/home.ejs", {
       products,
