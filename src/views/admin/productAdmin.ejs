@@ -299,14 +299,17 @@
 
                                                             </td>
                                                             <td style="text-align: center;">
-
+                                                                <a href="/admin/product/delete/<%=product.id%>">
                                                                 <button type="button"
                                                                     style="border: none; background-color: transparent; width: auto;"
-                                                                    data-toggle="modal" data-target="#deletemodal"
-                                                                    id="btn2" value="<%=product.id%>">
+                                        
+                                                                    id="btn2" value="<%=product.id%>"
+                                                                    onclick="return confirm('Bạn có muốn xóa sản phẩm này không')"
+                                                                >
                                                                     <i style="color:  #858796;"
                                                                         class="fas fa-trash"></i>
                                                                 </button>
+                                                                </a>
 
                                                             </td>
                                                         </tr>
@@ -394,16 +397,6 @@
         </div>
         
         <%- include('./block/footer.ejs') %>
-            <script>
-                function deleteprd() {
-                    var btn2 = document.getElementById("btn2");
-                    if (btn2) {
-                        location.href = "/admin/product/delete/" + btn2.value;
-                    } else {
-                        alert("btn2 not found");
-                    }
-                }
-            </script>
     </body>
 
 </html>

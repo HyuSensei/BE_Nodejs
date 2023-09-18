@@ -51,15 +51,18 @@ const getProductDetail2 = async (req, res) => {
 
 const getProductHome2 = async (req, res) => {
   try {
-
+    let cookie = req.cookies;
+    console.log("cookey",cookie.UserId)
+    if (typeof cookie.UserId == 'undefined') {
+      return res.render('success.ejs', { message: "vui lòng đăng nhập để vào trang", url: '/' })
+    }
     //console.log("ssss:", process.env.BASE_URL + `products`)
     let dataProducts = await axios.get(process.env.BASE_URL + `products`);
     // console.log("Data:", dataProducts.data.data);
 
     let products = dataProducts.data.product;
 
-    let cookie = req.cookies;
-    //console.log(cookie)
+    
     return res.render("admin/productAdmin.ejs", {
       products: products,
       cookie: cookie,
