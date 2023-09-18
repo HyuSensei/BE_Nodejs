@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinLeLe-Detail</title>
+    <%- include('./block/style.ejs') %>
+</head>
+
+<body>
+    <%- include('./block/header.ejs') %>
+        <div class="breadcrumb-option">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb__links">
+                            <a href=""><i class="fa fa-home"></i> Trang Chủ</a>
+                            <a href="">Chi Tiết Sản Phẩm </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+
+        <!-- Product Details Section Begin -->
+        <section class="product-details spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="product__details__pic">
+                            <div class="product__details__slider__content">
+                                <div class="product__details__pic__slider owl-carousel">
+                                    <a class="pt active" href="">
+                                        <img data-hash="product-1" class="product__big__img" src="<%= product.image %>"
+                                            alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product__details__text">
+                            <h5>
+                                <%= product.name %>
+                            </h5>
+                            <div class="product__details__price">
+
+                            </div>
+                            <p>
+                                <%= product.description %>
+                            </p>
+                            <div class="product__details__button">
+                                <a href="" class="cart-btn"> Thêm
+                                    giỏ
+                                    hàng</a>
+                            </div>
+                            <div style="margin-left: 10px;" class="row">
+                                <div class=".col-md-4">
+                                    <p style="font-size: 18px;">(
+                                        0 đánh giá)
+                                    </p>
+                                </div>
+                                <div style="margin-left: 50px;" class=".col-md-8">
+                                    <div class="rating">
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        0
+                                    </div>
+                                    <div class="rating">
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        0
+                                    </div>
+                                    <div class="rating">
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        0
+                                    </div>
+                                    <div class="rating">
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        0
+                                    </div>
+                                    <div class="rating">
+                                        <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
+                                        0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 100px;border-radius: 20px;" class="container">
+                <div style="font-size: 18px;padding-top: 20px;" class="container">ĐÁNH GIÁ SẢN PHẨM</div>
+                <div style="margin-top: 20px;">
+
+                    <div class="row">
+                        <div style="margin-left: 15px;" class=".col-md-2">
+                            <i style="font-size: 30px;padding-left: 25px;padding-top: 10px;"
+                                class="fa-solid fa-user"></i>
+                        </div>
+                        <div class=".col-md-10">
+                            <p style="padding-top: 10px;margin-left: 10px;">
+
+                            </p>
+                        </div>
+                    </div>
+                    <div style="margin-left: 25px;">
+                        <p>
+
+                        </p>
+                        <div class="rating">
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                        </div>
+                        <div class="rating">
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                        </div>
+                        <div class="rating">
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                        </div>
+                        <div class="rating">
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                        </div>
+                        <div class="rating">
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
+                        </div>
+                        <p>
+
+                        </p>
+                    </div>
+                    <hr>
+                    <p style="padding-left:30px">Chưa có đánh giá nào !</p>
+
+                </div>
+            </div>
+        </section>
+        <%- include('./block/footer.ejs') %>
+</body>
+<%- include('./block/script.ejs') %>
+
+</html>

@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../middleware/UploadImg")
 
 const authController = require("../controllers/authentication/authController");
 const userController = require("../controllers/userController");
 const productController = require("../controllers/productController");
+const categoryController = require("../controllers/categoryController");
 const middleware = require("../middleware/JWTAction");
 
 //router.all("*", middleware.checkLogin, middleware.checkPremission);
@@ -22,5 +24,11 @@ router.delete("/users/:id", userController.destroyUser);
 router.post("/products/create", productController.storeProduct);
 router.get("/products", productController.indexProduct);
 router.get("/products/:id", productController.showProduct);
-router.post("/products/update", productController.updateProduct);
+router.get("/products/delete/:id", productController.destroyProduct);
+router.post("/products/getbyname", productController.getProductByName);
+
+router.post("/products/update", upload.single('image'), productController.updateProduct);
+
+
+router.get("/categories", categoryController.indexCategory);
 module.exports = router;
