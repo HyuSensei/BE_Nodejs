@@ -232,19 +232,17 @@
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Danh sách sản phẩm</h1>
+                            <h1 class="h3 mb-2 text-gray-800">Danh người dùng</h1>
 
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
-                                
-                                <div class="card-header py-3" style="text-align: center; display: flex; align-items: center;" >
-                                    <div style="width: 50%;"><a href="/admin/product/create" style="text-decoration: none;"><i class="fa-solid fa-plus"></i> Thêm sản phẩm mới</a></div>
-                                    <form action="/admin/product" method="post"
+                                <div class="card-header py-3" style="text-align: center;">
+                                    <form action="/admin/user/" method="post"
                                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                         <div class="input-group" style="border: 1px solid black; border-radius: 6px ;">
                                             <input type="text" class="form-control bg-light border-0 small"
-                                                placeholder="nhập tên sản phẩm" aria-label="Search"
-                                                aria-describedby="basic-addon2" name="name" <% if(typeof nameSearch
+                                                placeholder="nhập tên người dùng" aria-label="Search"
+                                                aria-describedby="basic-addon2" name="username" <% if(typeof nameSearch
                                                 !=='undefined' ){ %>
                                             value="<%=nameSearch%>"
                                                 <%}%>
@@ -257,7 +255,7 @@
                                                     </div>
                                         </div>
                                     </form>
-                                    
+
                                 </div>
                                 <div class="card-body">
 
@@ -265,58 +263,57 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 50%;">Tên sản phẩm</th>
-                                                    <th style="text-align: center;">Giá(VNĐ)</th>
-                                                    <th style="text-align: center;">Số lượng</th>
+                                                    <th style="width: 50%;">Tên người dùng</th>
+                                                    <th style="text-align: center;">Email</th>
+                                                    <th style="text-align: center;">UserName</th>
                                                     <th style="text-align: center; width: 10%;">Chỉnh sửa</th>
-                                                    <th style="text-align: center; width: 10%;">Xóa sản phẩm</th>
+                                                    <th style="text-align: center; width: 10%;">Xóa người dùng</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% if(typeof products !=='undefined' ){ %>
-                                                    <% products.forEach(product=> { %>
+                                                <% if(typeof dataUser !=='undefined' ){ %>
+                                                    <% dataUser.forEach(user=> { %>
 
                                                         <tr>
                                                             <td>
-                                                                <%= product.name %>
+                                                                <%= user.name %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%= product.price %>
+                                                                <%= user.email %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%= product.quantity %>
+                                                                <%= user.username %>
                                                             </td>
 
                                                             <td style="text-align: center;">
 
-                                                                <a href="/admin/product/edit/<%=product.id%>">
-                                                                <button type="button"
-                                                                    style="border: none; background-color: transparent; width: auto;"
-                                                                    value="<%=product.id%>">
-                                                                    
-                                                                    <i style="color:  #858796;" class="fas fa-pen"></i>
-                                                                </button>
+                                                                <a href="/admin/user/update/<%= user.id %>">
+                                                                    <button type="button"
+                                                                        style="border: none; background-color: transparent; width: auto;"
+                                                                        value="">
+
+                                                                        <i style="color:  #858796;"
+                                                                            class="fas fa-pen"></i>
+                                                                    </button>
                                                                 </a>
 
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <a href="/admin/product/delete/<%=product.id%>">
-                                                                <button type="button"
-                                                                    style="border: none; background-color: transparent; width: auto;"
-                                        
-                                                                    id="btn2" value="<%=product.id%>"
-                                                                    onclick="return confirm('Bạn có muốn xóa sản phẩm này không')"
-                                                                >
-                                                                    <i style="color:  #858796;"
-                                                                        class="fas fa-trash"></i>
-                                                                </button>
+                                                                <a href="/admin/user/delete/<%= user.id %>">
+                                                                    <button type="button"
+                                                                        style="border: none; background-color: transparent; width: auto;"
+                                                                        id="btn2"
+                                                                        onclick="return confirm('Bạn có muốn xóa người dùng này không')">
+                                                                        <i style="color:  #858796;"
+                                                                            class="fas fa-trash"></i>
+                                                                    </button>
                                                                 </a>
 
                                                             </td>
                                                         </tr>
                                                         <% }); %>
-                                                            <% }%>
+                                                        <% }%>
 
                                             </tbody>
 
@@ -397,7 +394,7 @@
                 </div>
             </div>
         </div>
-        
+
         <%- include('./block/footer.ejs') %>
     </body>
 

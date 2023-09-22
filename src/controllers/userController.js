@@ -1,25 +1,39 @@
-const indexUser = (req, res) => {
-  return res.send("Get user");
+const userService = require('../services/userService')
+const indexUser = async (req, res) => {
+  let data = await userService.getAllUser();
+  return res.json(data);
 };
 
-const showUser = () => {};
+const showUser = async (req, res) => {
+  let data = await userService.detailUser(req.params.id);
+  return res.json(data);
+};
 
 const createUser = () => {};
 
-const storeUser = () => {};
+const searchByUserName = async (req, res) => {
+  let data = await userService.searchByUserName(req.query.username);
+  return res.json(data);
+};
 
-const destroyUser = () => {};
+const destroyUser = async (req, res) => {
+  let data = await userService.deleteUser(req.params.id);
+  return res.json(data);
+};
 
 const editUser = () => {};
 
-const updateUser = () => {};
+const updateUser = async (req, res) => {
+  let data = await userService.updateNewUser(req.body);
+  return res.json(data);
+};
 
 module.exports = {
   indexUser,
   createUser,
   destroyUser,
   showUser,
-  storeUser,
+  searchByUserName,
   editUser,
   updateUser,
 };

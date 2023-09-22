@@ -232,103 +232,68 @@
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Danh sách sản phẩm</h1>
+                            <h1 class="h3 mb-2 text-gray-800">Thông tin người dùng</h1>
 
                             <!-- DataTales Example -->
-                            <div class="card shadow mb-4">
-                                
-                                <div class="card-header py-3" style="text-align: center; display: flex; align-items: center;" >
-                                    <div style="width: 50%;"><a href="/admin/product/create" style="text-decoration: none;"><i class="fa-solid fa-plus"></i> Thêm sản phẩm mới</a></div>
-                                    <form action="/admin/product" method="post"
-                                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                        <div class="input-group" style="border: 1px solid black; border-radius: 6px ;">
-                                            <input type="text" class="form-control bg-light border-0 small"
-                                                placeholder="nhập tên sản phẩm" aria-label="Search"
-                                                aria-describedby="basic-addon2" name="name" <% if(typeof nameSearch
-                                                !=='undefined' ){ %>
-                                            value="<%=nameSearch%>"
-                                                <%}%>
+                            
 
-                                                    >
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-primary" type="submit">
-                                                            <i class="fas fa-search fa-sm"></i>
-                                                        </button>
-                                                    </div>
-                                        </div>
-                                    </form>
-                                    
-                                </div>
-                                <div class="card-body">
 
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 50%;">Tên sản phẩm</th>
-                                                    <th style="text-align: center;">Giá(VNĐ)</th>
-                                                    <th style="text-align: center;">Số lượng</th>
-                                                    <th style="text-align: center; width: 10%;">Chỉnh sửa</th>
-                                                    <th style="text-align: center; width: 10%;">Xóa sản phẩm</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% if(typeof products !=='undefined' ){ %>
-                                                    <% products.forEach(product=> { %>
-
-                                                        <tr>
-                                                            <td>
-                                                                <%= product.name %>
-                                                            </td>
-                                                            <td style="text-align: center;">
-                                                                <%= product.price %>
-                                                            </td>
-                                                            <td style="text-align: center;">
-                                                                <%= product.quantity %>
-                                                            </td>
-
-                                                            <td style="text-align: center;">
-
-                                                                <a href="/admin/product/edit/<%=product.id%>">
-                                                                <button type="button"
-                                                                    style="border: none; background-color: transparent; width: auto;"
-                                                                    value="<%=product.id%>">
-                                                                    
-                                                                    <i style="color:  #858796;" class="fas fa-pen"></i>
-                                                                </button>
-                                                                </a>
-
-                                                            </td>
-                                                            <td style="text-align: center;">
-                                                                <a href="/admin/product/delete/<%=product.id%>">
-                                                                <button type="button"
-                                                                    style="border: none; background-color: transparent; width: auto;"
+                                <div class="card shadow mb-4"
+                                    style="display: flex; flex-direction: row; height: 35rem; justify-content: center;">
+                                    <form action="/admin/user/update" method="post" style="display: flex;">
                                         
-                                                                    id="btn2" value="<%=product.id%>"
-                                                                    onclick="return confirm('Bạn có muốn xóa sản phẩm này không')"
-                                                                >
-                                                                    <i style="color:  #858796;"
-                                                                        class="fas fa-trash"></i>
-                                                                </button>
-                                                                </a>
-
-                                                            </td>
-                                                        </tr>
-                                                        <% }); %>
-                                                            <% }%>
-
-                                            </tbody>
-
-                                        </table>
-                                        <% if(typeof message !=='undefined' ){ %>
-                                            <p style="width: 100%; text-align: center;">
-                                                <%=message%>
-                                            </p>
+                                        
+                                        <div class="card" style="width: 50rem; border: none; margin-top: 1rem;">
+                                            <% if(dataUser !='undefined' ){ %>
+                                            <div class="form-floating mb-3" style="margin: 20px;">
+                                                <input type="hidden" name="id" value="<%= dataUser.id %>">
+                                                <label for="name">Họ và tên</label>
+                                                <input type="text" id="name" class="form-control"
+                                                    placeholder="Nhập họ và tên" value="<%= dataUser.name %>"
+                                                    name="name" required>
+                                                <label for="email">Email</label>
+                                                <input type="email" id="email" class="form-control"
+                                                    placeholder="Nhập Email" value="<%= dataUser.email %>"
+                                                    name="email" required readonly>
+                                                <label for="username">Username</label>
+                                                <input type="text" id="username" class="form-control"
+                                                    placeholder="Nhập username"
+                                                    name="username" value="<%= dataUser.username %>" required readonly>
+                                                <label for="password">Password</label>
+                                                <input type="password" id="password" class="form-control"
+                                                    placeholder="Nhập password" value="<%= dataUser.password %>"
+                                                    name="password" required readonly>
+                                                <label for="phone">SĐT</label>
+                                                <input type="text" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="<%= dataUser.phone %>" name="phone" required>
+                                                <label for="role">Vai trò</label>
+                                                <select class="form-control" id="role" name="RoleId">
+                                                    <% if(typeof Role != "undefined"){ 
+                                                        Role.forEach(role=>{
+                                                            if(role.id == dataUser.RoleId){ %>
+                                                                <option value="<%= role.id %>" selected>
+                                                                    <%= role.name %>
+                                                                </option>
+                                                    <% } else { %>
+                                                        <option value="<%= role.id %>"><%= role.name %></option>
+                                                    <% } })} %>
+                                                </select>
                                             <% } %>
-                                    </div>
+                                                <div
+                                                    style="margin-top: 2rem; text-align: center; display: flex; justify-content: space-around;">
+                                                    <a href="/admin/user" class="btn btn-danger">Trở lại</a>
+                                                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </form>
                                 </div>
-                            </div>
+
+                                
 
                         </div>
                         <!-- /.container-fluid -->
@@ -376,28 +341,8 @@
                 </div>
             </div>
         </div>
-        <!-- Modal delete product -->
-        <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="deletemodalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deletemodalLabel">Thông báo</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Bạn có chắc chắn muốn xóa sản phẩm này không
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-danger" onclick="deleteprd()">Xóa</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+
+
         <%- include('./block/footer.ejs') %>
     </body>
 
