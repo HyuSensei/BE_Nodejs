@@ -7,7 +7,8 @@ const registerUser = async (req, res) => {
       !req.body.username ||
       !req.body.email ||
       !req.body.password ||
-      !req.body.phone
+      !req.body.phone ||
+      !req.body.address
     ) {
       return res.json({
         success: false,
@@ -31,6 +32,9 @@ const loginUser = async (req, res) => {
       });
     } else {
       let data = await authService.handleUserLogin(req.body);
+      // res.cookie("UserId", data.user.id, {
+      //   maxAge: 24 * 60 * 60 * 1000,
+      // });
       // res.cookie("jwt", data.token, {
       //   maxAge: 24 * 60 * 60 * 1000,
       // });
@@ -43,6 +47,7 @@ const loginUser = async (req, res) => {
 
 const logoutUser = (req, res) => {
   res.cookie("jwt", "", { maxAge: 0 });
+  res.cookie("UserId", "", { maxAge: 0 });
   res.json({
     success: true,
     message: "Đăng xuất thành công !",

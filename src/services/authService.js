@@ -70,6 +70,7 @@ const registerNewUser = async (dataRegister) => {
       username: dataRegister.username,
       password: hashedPassword,
       phone: dataRegister.phone,
+      address: dataRegister.address,
       RoleId: 3,
     });
     return {
@@ -111,6 +112,7 @@ const handleUserLogin = async (dataLogin) => {
           name: user.name,
           username: user.username,
           phone: user.phone,
+          address: user.address,
         };
         let token = JWTAction.createJWT(dataUser);
         return {

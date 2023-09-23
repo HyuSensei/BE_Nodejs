@@ -34,6 +34,46 @@ app.use(cookieParser());
 
 connection();
 
+app.use((req, res, next) => {
+  if (!req.session.cart) {
+    req.session.cart = [];
+  }
+  let carts = req.session.cart;
+  let total = 0;
+  let sum = 0;
+  for (let i = 0; i < carts.length; i++) {
+    sum = carts[i].price * carts[i].quantity;
+    total += sum;
+  }
+  res.locals.cart = req.session.cart;
+  res.locals.total = total;
+  next();
+});
+app.use((req, res, next) => {
+  if (
+    !req.cookies.UserId ||
+    !req.cookies.name ||
+    !req.cookies.username ||
+    !req.cookies.email ||
+    !req.cookies.phone ||
+    !req.cookies.address
+  ) {
+    res.locals.UserId = "";
+    res.locals.name = "";
+    res.locals.username = "";
+    res.locals.email = "";
+    res.locals.phone = "";
+    res.locals.address = "";
+  }
+  res.locals.UserId = req.cookies.UserId;
+  res.locals.name = req.cookies.name;
+  res.locals.username = req.cookies.username;
+  res.locals.email = req.cookies.email;
+  res.locals.phone = req.cookies.phone;
+  res.locals.address = req.cookies.address;
+  next();
+});
+
 app.use("/", webRoute);
 app.use("/api/v1/", apiRoute);
 

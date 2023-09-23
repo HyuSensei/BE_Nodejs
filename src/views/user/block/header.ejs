@@ -70,10 +70,11 @@
 </style>
 <div class="container-fluid" style="background-color: #f3f3bf;height: 50px;">
     <div>
-        <p style="text-align: center;font-size: 18px; padding-top: 10px;font-weight: bold;">Chào Mừng Đến Với SkinLeLe!
+        <p style="text-align: center;font-size: 18px; padding-top: 10px;font-weight: bold;">Chào Mừng Đến Với SkinLeLe
         </p>
     </div>
 </div>
+
 <header class="header">
 
     <div class="header-top" data-header>
@@ -86,8 +87,8 @@
             </button>
 
             <div class="input-wrapper">
-                <form action="" method="GET">
-                    <input type="search" name="search" placeholder="Nhập..." class="search-field">
+                <form action="/search" method="GET">
+                    <input type="search" name="id" placeholder="Nhập..." class="search-field">
                     <button class="search-submit" aria-label="search">
                         <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
                     </button>
@@ -109,13 +110,16 @@
 
                 <button class="header-action-btn" aria-label="cart item">
                     <data class="btn-text" value="0">
-                        0đ
+                        <% total=total.toLocaleString('vi-VN') %>
+                            <%= total %>đ
                     </data>
 
-                    <a href="">
+                    <a href="/viewCart">
                         <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
                     </a>
-                    <span class="btn-badge">0</span>
+                    <span class="btn-badge">
+                        <%= cart.length %>
+                    </span>
                 </button>
 
             </div>
@@ -142,12 +146,13 @@
                     <li class="dropdown">
                         <a class="navbar-link has-after">Tài Khoản</a>
                         <div class="dropdown-content">
-
-                            <a href="/login">Đăng Nhập</a>
-                            <a href="/register">Đăng Ký</a>
-                            <a href="">Account</a>
-                            <a href="/logout">Đăng Xuất</a>
-
+                            <% if(!UserId) { %>
+                                <a href="/login">Đăng Nhập</a>
+                                <a href="/register">Đăng Ký</a>
+                                <% } else { %>
+                                    <a href="/user">Account</a>
+                                    <a href="/logout">Đăng Xuất</a>
+                                    <% } %>
                         </div>
 
                     </li>
@@ -203,6 +208,7 @@
 
                     <a href="">Account</a>
                     <a href="">Đăng Xuất</a>
+
 
                 </div>
             </li>

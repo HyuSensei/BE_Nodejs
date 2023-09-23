@@ -2,7 +2,16 @@ const db = require("../models/index");
 
 const getAllUser = () => {};
 
-const detailUser = () => {};
+const detailUser = async (dataUser) => {
+  try {
+    let data = await db.User.findOne({
+      where: { id: dataUser },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const createNewUser = () => {};
 

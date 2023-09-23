@@ -1,8 +1,11 @@
-const indexUser = (req, res) => {
-  return res.send("Get user");
-};
+const userService = require("../services/userService");
 
-const showUser = () => {};
+const indexUser = (req, res) => {};
+
+const showUser = async (req, res) => {
+  let user = await userService.detailUser(req.cookies.UserId);
+  return res.render("user/myaccount.ejs", { user });
+};
 
 const createUser = () => {};
 

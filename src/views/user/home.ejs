@@ -182,7 +182,8 @@
                                                             class="arrow_expand"></span></a>
                                                 </li>
                                                 <li><a href=""><span class="icon_heart_alt"></span></a></li>
-                                                <li><a href=""><button class="add_to_cart"><span
+                                                <li><a href="/addCart/<%= product.id %>"><button
+                                                            class="add_to_cart"><span
                                                                 class="icon_bag_alt"></span></button></a></li>
                                             </ul>
                                         </div>
@@ -200,7 +201,8 @@
                                                 </a>
                                             </h6>
                                             <div class="product__price">
-                                                <%= product.price %> đ
+                                                <% product.price=product.price.toLocaleString('vi-VN') %>
+                                                    <%= product.price %> đ
                                             </div>
                                         </div>
                                     </div>
@@ -359,9 +361,6 @@
             </article>
         </main>
         <%- include('./block/footer.ejs') %>
-            <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
-                <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
-            </a>
 </body>
 <%- include('./block/script.ejs') %>
 

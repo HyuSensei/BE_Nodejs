@@ -18,7 +18,9 @@ const getProductDetail = async (req, res) => {
     let data = await axios.get(`http://localhost:8081/api/v1/products/${id}`);
     let product = data.data.product;
     if (data.data.success !== false) {
-      return res.render("user/product_detail.ejs", { product });
+      return res.render("user/product_detail.ejs", {
+        product,
+      });
     }
   } catch (error) {
     console.log("Error:", error);

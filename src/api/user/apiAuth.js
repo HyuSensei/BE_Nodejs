@@ -24,9 +24,9 @@ const handleLogin = async (req, res) => {
       req.flash("erro", `${data.data.message}`);
     } else {
       req.flash("success", `${data.data.message}`);
-      res.cookie("UserId", data.data.user.id, {
-        maxAge: 24 * 60 * 60 * 1000,
-      });
+      // res.cookie("UserId", data.data.user.id, {
+      //   maxAge: 24 * 60 * 60 * 1000,
+      // });
       res.cookie("jwt", data.data.token, {
         maxAge: 24 * 60 * 60 * 1000,
       });

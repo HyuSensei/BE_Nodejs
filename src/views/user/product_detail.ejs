@@ -46,13 +46,14 @@
                                 <%= product.name %>
                             </h5>
                             <div class="product__details__price">
-
+                                <% product.price=product.price.toLocaleString('vi-VN') %>
+                                    <%= product.price %> đ
                             </div>
                             <p>
                                 <%= product.description %>
                             </p>
                             <div class="product__details__button">
-                                <a href="" class="cart-btn"> Thêm
+                                <a href="/addCart/<%= product.id %>" class="cart-btn"> Thêm
                                     giỏ
                                     hàng</a>
                             </div>
