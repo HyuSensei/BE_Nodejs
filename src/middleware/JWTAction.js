@@ -103,9 +103,9 @@ const checkPremission = async (req, res, next) => {
   if (user.Role.name === "Admin" || user.Role.name === "SuperAdmin") {
     next();
   } else {
-    return res.json({
-      success: false,
-      message: "Bạn không có quyền truy cập !",
+    return res.render("success.ejs", {
+      message: "bạn không có quyền truy cập",
+      url: "/",
     });
   }
 };

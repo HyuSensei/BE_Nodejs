@@ -6,6 +6,7 @@ const userController = require("../controllers/userController");
 const productController = require("../controllers/productController");
 const orderController = require("../controllers/orderController");
 const rateController = require("../controllers/rateController");
+
 const middleware = require("../middleware/JWTAction");
 
 //router.all("*", middleware.checkLogin, middleware.checkPremission);
@@ -15,8 +16,9 @@ router.post("/login", authController.loginUser);
 router.get("/logout", authController.logoutUser);
 
 router.get("/users", userController.indexUser);
+router.get("/users/:id", userController.showUser);
 router.get("/users/create", userController.createUser);
-router.post("/users", userController.storeUser);
+router.post("/users", userController.searchByUserName);
 router.get("/users/update", userController.editUser);
 router.post("/users/update", userController.updateUser);
 router.delete("/users/:id", userController.destroyUser);

@@ -9,20 +9,29 @@ const showUser = async (req, res) => {
 
 const createUser = () => {};
 
-const storeUser = () => {};
+const searchByUserName = async (req, res) => {
+  let data = await userService.searchByUserName(req.query.username);
+  return res.json(data);
+};
 
-const destroyUser = () => {};
+const destroyUser = async (req, res) => {
+  let data = await userService.deleteUser(req.params.id);
+  return res.json(data);
+};
 
 const editUser = () => {};
 
-const updateUser = () => {};
+const updateUser = async (req, res) => {
+  let data = await userService.updateNewUser(req.body);
+  return res.json(data);
+};
 
 module.exports = {
   indexUser,
   createUser,
   destroyUser,
   showUser,
-  storeUser,
+  searchByUserName,
   editUser,
   updateUser,
 };
