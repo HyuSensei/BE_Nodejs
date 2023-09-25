@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinLeLe-OrderComplete</title>
+    <%- include('./block/style.ejs') %>
+</head>
+
+<body class="js">
+    <%- include('./block/header.ejs') %>
+        <main>
+            <article>
+                <div class="breadcrumb-option">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="breadcrumb__links">
+                                    <a href="/"><i class="fa fa-home"></i> Trang Chủ</a>
+                                    <span>Chờ Xác Nhận Đơn Hàng</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" style="height: 85%;margin-top: 50px;">
+                    <div class="row" style="height: 100%;margin-left: 100px;">
+                        <div style="background-color: white;" class="col-sm-3">
+                            <div class="container">
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-sm-2">
+                                        <i style="font-size: 50px;" class="fa-solid fa-user"></i>
+                                    </div>
+                                    <div class="col-sm-10">
+
+                                        <div class="container">
+                                            <p>
+                                                <%= name %>
+                                            </p>
+                                            <p>
+                                                <%= email %>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="container" style="margin-top: 20px;border-top: 2px;">
+                                <a href="/user">
+                                    <p><i class="fa-solid fa-user"></i> Thông Tin</p>
+                                </a>
+                                <br>
+                                <a href="/orderConfirm/<%= UserId %>">
+                                    <p style="font-weight: bold;"><i class="fa-sharp fa-solid fa-bag-shopping"></i> Quản
+                                        Lý Đơn
+                                        Hàng</p>
+                                </a>
+                                <br>
+                                <a href="/viewCart">
+                                    <p><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng</p>
+                                </a>
+                                <br>
+                                <a href="/logout">
+                                    <p><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="background-color: white;" class="col-sm-9">
+                            <div style="margin-left: 100px;margin-top: 20px">
+                                <div class="container-fluid">
+                                    <div class="row">
+
+                                        <div class="col-2">
+                                            <a href="/orderConfirm/<%= UserId %>">Chờ xác
+                                                nhận</a>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <a href="/orderShip/<%= UserId %>">Vận chuyển</a>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <a style="font-weight: bold;" href="/orderComplete/<%= UserId %>">Hoàn
+                                                thành</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 50px" class="container-fluid">
+                                    <% if(orders.length>0) {
+                                        orders.forEach(function(order){ %>
+                                        <div style="margin-bottom: 30px" class="row">
+                                            <div class="col-3">
+                                                <img src="<%= order['Order_Products.Product.image'] %>" alt=""
+                                                    width="140px">
+                                            </div>
+                                            <div class="col-9">
+                                                <p>
+                                                    <%= order["Order_Products.Product.name"] %>
+                                                </p>
+                                                <p>
+                                                    x <%= order["Order_Products.quantity"] %>
+                                                </p>
+                                                <p style="color: #820813 ">
+                                                    <% order["Order_Products.Product.price"]=order["Order_Products.Product.price"].toLocaleString('vi-VN')
+                                                        %>
+                                                        <%= order["Order_Products.Product.price"] %> đ
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <% lastProduct.forEach(function(item) {
+                                            if(item===order["Order_Products.ProductId"]) { %>
+                                            <div style="margin-top: 20px;margin-bottom: 30px" class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div style="font-size: 13px;color:#65bebc"></div>
+                                                        <div style="font-size: 13px;color:#ee4d2d">Hình thức
+                                                            thanh toán:
+                                                            <%= order.payment %>
+                                                        </div>
+                                                        <div style="font-size: 11px;">Vui lòng bấm đã nhận
+                                                            hàng khi sản
+                                                            phẩm được giao tới và sản phẩm không vấn đề gì.
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p style="color:#820813; ">
+                                                            <% order.total=order.total.toLocaleString('vi-VN') %>
+                                                                Thành tiền: <%= order.total %> đ
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <div style="margin-left: -70px;" class="col-6">
+                                                            <a
+                                                                href="/rateOrder/user=<%= UserId %>/order=<%= order.id %>"><button
+                                                                    style="font-size: 15px;margin-left: 10px;background-color: white;color: gray"
+                                                                    type="button" class="btn btn-info">Đánh
+                                                                    giá</button></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                                <hr>
+                                <% } %>
+                                    <% }); %>
+                                        <% }); %>
+                                            <% } else { %>
+                                                <div class="container">
+                                                    <p style="font-size: 20px;font-weight: bold;">Chưa
+                                                        có đơn hàng nào đã hoàn thành</p>
+                                                </div>
+                                                <% } %>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </article>
+        </main>
+        <%- include('./block/footer.ejs') %>
+</body>
+<%- include('./block/script.ejs') %>
+
+</html>

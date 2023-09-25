@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinLele-Cart</title>
+    <%- include('./block/style.ejs') %>
+</head>
+
+<body>
+    <%- include('./block/header.ejs') %>
+        <!-- Breadcrumb Begin -->
+        <div class="breadcrumb-option">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb__links">
+                            <a href="/"><i class="fa fa-home"></i> Trang Chủ</a>
+                            <span>Giỏ hàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Shop Cart Section Begin -->
+        <section class="shop-cart spad">
+            <div class="container">
+                <% if (carts.length>0) { %>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="shop__cart__table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Sản Phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Số Lượng</th>
+                                            <th>Tổng Tiền</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% carts.forEach(item=> { %>
+                                            <tr>
+                                                <td class="cart__product__item">
+                                                    <img src="<%= item.image %>" width=100px>
+                                                    <div class="cart__product__item__title">
+                                                        <h6>
+                                                            <%= item.name %>
+                                                        </h6>
+                                                        <div class="rating">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price">
+                                                    <% let price=item.price.toLocaleString('vi-VN') %>
+                                                        <%= price %> đ
+                                                </td>
+                                                <td class="cart__quantity">
+                                                    <div style="margin-top: 10px;display: flex;">
+                                                        <a href="/increaseCart/<%= item.id %>" style="margin: 10px;"><i
+                                                                style="font-size: 25px;"
+                                                                class="fa-solid fa-circle-plus"></i></a>
+                                                        <span style="margin: 10px;">
+                                                            <%= item.quantity %>
+                                                        </span>
+                                                        <a href="/decreaseCart/<%= item.id %>" style="margin: 10px;"><i
+                                                                style="font-size: 25px;"
+                                                                class="fa-solid fa-circle-minus"></i></a>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__total">
+                                                    <% let priceTotal=item.quantity*item.price %>
+                                                        <%priceTotal= priceTotal.toLocaleString('vi-VN') %>
+                                                            <%= priceTotal %> đ
+                                                </td>
+                                                <td class="cart__close"><a href="/deleteCart/<%= item.id %>"><span
+                                                            class="icon_close"></span></a>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        <div class="container">
+                            <p style="font-size: 20px;font-weight: bold;text-align: center;">Giỏ hàng trống!</p>
+                        </div>
+                        <% } %>
+                            <form style="margin-top: 100px;" action="/order" method="POST" class="checkout__form">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h5>CHI TIẾT ĐẶT HÀNG</h5>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="checkout__form__input">
+                                                    <p>Họ tên người nhận <span>*</span></p>
+                                                    <input id="name" type="text" name="name" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="checkout__form__input">
+                                                    <p>Số điện thoại <span>*</span></p>
+                                                    <input id="phone" name="phone" type="text" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="checkout__form__input">
+                                                    <p>Địa chỉ nhận hàng <span>*</span></p>
+                                                    <input id="address" type="text" name="address" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 offset-lg-2">
+                                        <div class="cart__total__procced">
+                                            <h6>Thành Tiền</h6>
+                                            <ul>
+                                                <li>Tổng <span>
+                                                        <%total= total.toLocaleString('vi-VN') %>
+                                                            <%= total %> đ
+                                                    </span></li>
+                                            </ul>
+                                            <div class="checkout__order__widget">
+                                                <label style="font-size: 15px" for="o-acc">
+                                                    Thanh toán khi nhận hàng
+                                                    <input type="radio" class="orderoff" name="method" value="orderoff"
+                                                        id="o-acc">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label style="font-size: 16px" for="check-payment">
+                                                    Thanh toán vnpay
+                                                    <input type="radio" class="ordervnpay" name="method"
+                                                        value="ordervnpay" id="check-payment">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <input type="submit" name="redirect" id="redirect" class="primary-btn"
+                                                style="width: 100%" value="Đặt hàng">
+                                        </div>
+                            </form>
+            </div>
+            </div>
+            </div>
+        </section>
+        <%- include('./block/footer.ejs') %>
+</body>
+<%- include('./block/script.ejs') %>
+
+</html>

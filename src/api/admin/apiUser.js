@@ -57,8 +57,7 @@ const getUpdateUser = async (req, res) => {
         let dataUser = await axios.get(process.env.BASE_URL + `users/${id}`);
         let getRole = await axios.get(process.env.BASE_URL + `role`);
         Role = getRole.data.Role
-        data = dataUser.data.dataUser
-        //console.log(Role)
+        data = dataUser.data
         return res.render("admin/editUser.ejs", { dataUser: data, Role: Role })
         
     } catch (error) {
