@@ -7,6 +7,7 @@ const userController = require("../controllers/userController");
 const productController = require("../controllers/productController");
 const categoryController = require("../controllers/categoryController");
 const roleController = require("../controllers/roleController");
+const orderController = require("../controllers/orderController");
 const middleware = require("../middleware/JWTAction");
 
 //router.all("*", middleware.checkLogin, middleware.checkPremission);
@@ -37,5 +38,12 @@ router.get("/categories", categoryController.indexCategory);
 
 router.get("/role", roleController.indexRole);
 router.get("/role/:id", roleController.roleById);
+router.get("/order", orderController.indexOrder);
+
+router.get("/statistics", orderController.getStatistics);
+router.get("/statisticsByMonht", orderController.getStatisticsByMonht);
+router.get("/statisticsByYear", orderController.getStatisticsByYear);
+
+
 
 module.exports = router;

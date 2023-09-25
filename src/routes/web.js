@@ -6,6 +6,8 @@ const apiUser = require("../api/admin/apiUser");
 const middleware = require("../middleware/JWTAction");
 const upload = require("../middleware/UploadImg")
 const JWTAction = require("../middleware/JWTAction")
+const apiAdmin = require("../api/admin/apiAdmin");
+
 router.get("/", apiProduct.getProductHome1);
 
 router.get("/login", middleware.checkLoginUser);
@@ -33,9 +35,7 @@ router.get("/detail/:id", apiProduct.getProductDetail);
 
 // admin
 
-router.get("/admin", JWTAction.checkPremission, (req, res) => {
-  return res.render("admin/indexAdmin.ejs");
-});
+router.get("/admin", JWTAction.checkPremission, apiAdmin.getHome);
 //get all product
 router.get("/admin/product", JWTAction.checkPremission, apiProduct.getProductHome2);
 //delete product
