@@ -23,7 +23,11 @@ router.get("/register", (req, res) => {
 router.get("/logout", (req, res) => {
   res.cookie("jwt", "", { maxAge: 0 });
   res.cookie("UserId", "", { maxAge: 0 });
-  res.cookie("User", "", { maxAge: 0 });
+  res.cookie("name", "", { maxAge: 0 });
+  res.cookie("email", "", { maxAge: 0 });
+  res.cookie("phone", "", { maxAge: 0 });
+  res.cookie("username", "", { maxAge: 0 });
+  res.cookie("address", "", { maxAge: 0 });
   return res.redirect("/login");
 });
 router.post("/register", apiAuth.handleRegister);
@@ -36,6 +40,8 @@ router.get("/detail/:id", apiProduct.getProductDetail);
 
 router.get("/addCart/:id", cartController.handleAddCart);
 router.get("/viewCart", (req, res) => {
+  let erro = req.flash("erro");
+  let success = req.flash("success");
   let carts = req.session.cart;
   let total = 0;
   let sum = 0;
@@ -44,7 +50,7 @@ router.get("/viewCart", (req, res) => {
     total += sum;
   }
   //console.log("Cart", carts);
-  return res.render("user/cart.ejs", { carts, total });
+  return res.render("user/cart.ejs", { carts, total, success, erro });
 });
 router.get("/deleteCart/:id", cartController.deleteCart);
 router.get("/increaseCart/:id", cartController.upCart);
@@ -66,10 +72,18 @@ router.get(
   middleware.requireLogin,
   apiOrder.getOrderComplete
 );
-router.get("/updateStatusOrder/:orderId", apiOrder.updateStatusOrder);
+router.get(
+  "/updateStatusOrder/:orderId",
+  middleware.requireLogin,
+  apiOrder.updateStatusOrder
+);
 
-router.post("/rateOrderAction", apiRate.handleRate);
-router.get("/rateOrder/user=:userId/order=:orderId", apiOrder.getOrderRate);
+router.post("/rateOrderAction", middleware.requireLogin, apiRate.handleRate);
+router.get(
+  "/rateOrder/user=:userId/order=:orderId",
+  middleware.requireLogin,
+  apiOrder.getOrderRate
+);
 
 router.get("/user", middleware.requireLogin, userController.showUser);
 

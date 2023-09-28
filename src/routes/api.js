@@ -35,5 +35,5 @@ router.get("/orderComplete/:UserId", orderController.orderComplete);
 router.get("/orderRate/:userId/:orderId", orderController.viewRateOrder);
 router.post("/rateOrder", rateController.handleRate);
 router.get("/updateStatusOrder/:orderId", orderController.updateStatus);
-
+router.get("/starDetailProdouct/:productId", rateController.getRate);
 module.exports = router;

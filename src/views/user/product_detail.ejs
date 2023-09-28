@@ -60,7 +60,7 @@
                             <div style="margin-left: 10px;" class="row">
                                 <div class=".col-md-4">
                                     <p style="font-size: 18px;">(
-                                        0 đánh giá)
+                                        <%= countRate %> đánh giá)
                                     </p>
                                 </div>
                                 <div style="margin-left: 50px;" class=".col-md-8">
@@ -70,29 +70,29 @@
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
-                                        0
+                                        <%= countStar.fine %>
                                     </div>
                                     <div class="rating">
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
-                                        0
+                                        <%= countStar.four %>
                                     </div>
                                     <div class="rating">
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
-                                        0
+                                        <%= countStar.three %>
                                     </div>
                                     <div class="rating">
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
-                                        0
+                                        <%= countStar.two %>
                                     </div>
                                     <div class="rating">
                                         <i style="margin: 5px;font-size: 20px" class="fa fa-star"></i>
-                                        0
+                                        <%= countStar.one %>
                                     </div>
                                 </div>
                             </div>
@@ -102,56 +102,92 @@
             </div>
             <div style="margin-top: 100px;border-radius: 20px;" class="container">
                 <div style="font-size: 18px;padding-top: 20px;" class="container">ĐÁNH GIÁ SẢN PHẨM</div>
-                <div style="margin-top: 20px;">
+                <% if(rate.length>0) { %>
+                    <% rate.forEach(function(item){ %>
+                        <div style="margin-top: 20px;">
+                            <div class="row">
+                                <div style="margin-left: 15px;" class=".col-md-2">
+                                    <i style="font-size: 30px;padding-left: 25px;padding-top: 10px;"
+                                        class="fa-solid fa-user"></i>
+                                </div>
+                                <div class=".col-md-10">
+                                    <p style="padding-top: 10px;margin-left: 10px;">
+                                        <%= item.User.name %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div style="margin-left: 25px;">
+                                <% const apiDateString="2023-09-24T14:59:44.000Z" ; %>
 
-                    <div class="row">
-                        <div style="margin-left: 15px;" class=".col-md-2">
-                            <i style="font-size: 30px;padding-left: 25px;padding-top: 10px;"
-                                class="fa-solid fa-user"></i>
-                        </div>
-                        <div class=".col-md-10">
-                            <p style="padding-top: 10px;margin-left: 10px;">
+                                    <% const apiDate=new Date(item.createdAt); %>
+                                        <% const day=apiDate.getDate(); %>
+                                            <% const month=apiDate.getMonth() + 1; %>
+                                                <% const year=apiDate.getFullYear(); %>
 
-                            </p>
-                        </div>
-                    </div>
-                    <div style="margin-left: 25px;">
-                        <p>
+                                                    <% const formattedDateString=`${day}-${month < 10 ? "0" : ""
+                                                        }${month}-${year}`; %>
 
-                        </p>
-                        <div class="rating">
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                        </div>
-                        <div class="rating">
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                        </div>
-                        <div class="rating">
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                        </div>
-                        <div class="rating">
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                        </div>
-                        <div class="rating">
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;" class="fa fa-star"></i>
-                        </div>
-                        <p>
+                                                        <p>
+                                                            <%= formattedDateString %>
+                                                        </p>
+                                                        <% if (item.star===1) { %>
+                                                            <div class="rating">
+                                                                <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                    class="fa fa-star"></i>
+                                                            </div>
+                                                            <% } else if (item.star===2) { %>
+                                                                <div class="rating">
+                                                                    <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                        class="fa fa-star"></i>
+                                                                    <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                        class="fa fa-star"></i>
+                                                                </div>
+                                                                <% } else if (item.star===3) { %>
+                                                                    <div class="rating">
+                                                                        <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                            class="fa fa-star"></i>
+                                                                        <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                            class="fa fa-star"></i>
+                                                                        <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                            class="fa fa-star"></i>
+                                                                    </div>
+                                                                    <% } else if (item.star===4) { %>
+                                                                        <div class="rating">
+                                                                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                class="fa fa-star"></i>
+                                                                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                class="fa fa-star"></i>
+                                                                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                class="fa fa-star"></i>
+                                                                            <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                class="fa fa-star"></i>
+                                                                        </div>
+                                                                        <% } else { %>
+                                                                            <div class="rating">
+                                                                                <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                    class="fa fa-star"></i>
+                                                                                <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                    class="fa fa-star"></i>
+                                                                                <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                    class="fa fa-star"></i>
+                                                                                <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                    class="fa fa-star"></i>
+                                                                                <i style="margin: 5px;font-size: 20px;color: #e3c01c;"
+                                                                                    class="fa fa-star"></i>
+                                                                            </div>
+                                                                            <% } %>
 
-                        </p>
-                    </div>
-                    <hr>
-                    <p style="padding-left:30px">Chưa có đánh giá nào !</p>
+                                                                                <p>
+                                                                                    <%= item.comment %>
+                                                                                </p>
+                            </div>
+                            <hr>
+                            <% }); %>
+                                <% } else { %>
+                                    <p style="padding-left:30px">Chưa có đánh giá nào !</p>
+                                    <% } %>
 
-                </div>
+                        </div>
             </div>
         </section>
         <%- include('./block/footer.ejs') %>

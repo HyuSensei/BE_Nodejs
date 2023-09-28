@@ -1,4 +1,3 @@
-const { where } = require("sequelize");
 const db = require("../models/index");
 
 const addOrder = async (cart, userOrder, UserId) => {
@@ -26,7 +25,7 @@ const addOrder = async (cart, userOrder, UserId) => {
     }
     return {
       success: true,
-      message: "Đặt hàng thành công",
+      message: "Đặt hàng thành công !",
     };
   } catch (error) {
     console.log(error);
@@ -117,6 +116,37 @@ const getOrderComplete = async (dataOrder) => {
   }
 };
 
+const countOrderRate = async (dataCount) => {
+  try {
+    let countOrder = await db.Order_Product.count({
+      where: {
+        OrderId: dataCount,
+      },
+    });
+    let countRate = await db.Rate.count({
+      where: {
+        OrderId: dataCount,
+      },
+    });
+    return {
+      OrderId: dataCount,
+      countOrder: countOrder,
+      countRate: countRate,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getOrderAll = async () => {
+  try {
+    let data = await db.Order.findAll();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const checkMaxOrder = async (dataOrder) => {
   try {
     let data = await db.Order_Product.findOne({
@@ -188,4 +218,6 @@ module.exports = {
   getOrderComplete,
   getOrderRate,
   handleupdate,
+  countOrderRate,
+  getOrderAll,
 };

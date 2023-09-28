@@ -3,10 +3,7 @@ require("dotenv").config();
 
 const handleRegister = async (req, res) => {
   try {
-    let data = await axios.post(
-      process.env.BASE_URL+`register`,
-      req.body
-    );
+    let data = await axios.post(process.env.BASE_URL + `register`, req.body);
     console.log(data.data.success);
     if (data.data.success == false) {
       req.flash("erro", `${data.data.message}`);
@@ -21,16 +18,11 @@ const handleRegister = async (req, res) => {
 
 const handleLogin = async (req, res) => {
   try {
-    let data = await axios.post(process.env.BASE_URL+`login`, req.body);
+    let data = await axios.post(process.env.BASE_URL + `login`, req.body);
     if (data.data.success == false) {
       req.flash("erro", `${data.data.message}`);
     } else {
       req.flash("success", `${data.data.message}`);
-      // res.cookie("UserId", data.data.user.id, {
-      //   maxAge: 24 * 60 * 60 * 1000,
-      // });
-
-      // req.flash("success", `<script>alert('đăng nhập thành công');</script>`);
       res.cookie("UserId", data.data.user.id, {
         maxAge: 24 * 60 * 60 * 1000,
       });

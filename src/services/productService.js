@@ -1,6 +1,6 @@
 const { name } = require("ejs");
 const db = require("../models/index");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 
 const indexGetProduct = async () => {
   try {
@@ -15,39 +15,46 @@ const indexGetProduct = async () => {
   }
 };
 
-const uploadIMG =  async (image) => {
+const uploadIMG = async (image) => {
   if (!image) {
-    return res.status(400).json({ message: 'Không có tệp hình ảnh được tải lên.' });
+    return res
+      .status(400)
+      .json({ message: "Không có tệp hình ảnh được tải lên." });
   }
 
-  return res.status(200).json({ message: 'Tệp hình ảnh đã được tải lên thành công.' });
-}
+  return res
+    .status(200)
+    .json({ message: "Tệp hình ảnh đã được tải lên thành công." });
+};
 
 const storeNewProduct = async (dataStore) => {
   try {
-    console.log('data',dataStore)
-    nameprd = dataStore.body.name
-    price = dataStore.body.price
-    description = dataStore.body.description
-    quantity = dataStore.body.quantity
-    CategoryId = dataStore.body.CategoryId
-    
-    
-    if (nameprd == "" || price == "" || description=="" || quantity =="" || CategoryId ==0){
+    console.log("data", dataStore);
+    nameprd = dataStore.body.name;
+    price = dataStore.body.price;
+    description = dataStore.body.description;
+    quantity = dataStore.body.quantity;
+    CategoryId = dataStore.body.CategoryId;
+
+    if (
+      nameprd == "" ||
+      price == "" ||
+      description == "" ||
+      quantity == "" ||
+      CategoryId == 0
+    ) {
       return {
         success: false,
         message: "Vui lòng nhập đầu đủ thông tin !",
-      }
+      };
     }
-    if (typeof dataStore.file == 'undefined') {
+    if (typeof dataStore.file == "undefined") {
       return {
-        
-          success: false,
-          message: "Vui lòng chọn ảnh sản phẩm !",
-        
-      }
+        success: false,
+        message: "Vui lòng chọn ảnh sản phẩm !",
+      };
     }
-    image = "/images/products/" + dataStore.file.originalname
+    image = "/images/products/" + dataStore.file.originalname;
     await db.Product.create({
       name: nameprd,
       image: image,
@@ -71,11 +78,7 @@ const showDetailProduct = async (dataProduct) => {
       where: { id: dataProduct },
     });
     //console.log('s',data)
-    return {
-      success: true,
-      message: `Chi tiết sản phẩm id=${data.id}`,
-      product: data,
-    };
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -87,7 +90,8 @@ const getProductByName = async (name) => {
       where: {
         name: {
           [Op.like]: `%${name}%`,
-        } },
+        },
+      },
     });
     if (data.length > 0) {
       return {
@@ -102,7 +106,6 @@ const getProductByName = async (name) => {
         product: data,
       };
     }
-    
   } catch (error) {
     console.log(error);
   }
@@ -123,27 +126,29 @@ const deleteProduct = async (dataProduct) => {
       success: false,
       message: `xóa sản phẩm thất bại`,
     };
-    
   }
 };
 const updateNewProduct = async (dataProduct) => {
   try {
-    console.log("ass", dataProduct)
-      await db.Product.update(
-        {
-          name: dataProduct.body.name,
-          price: dataProduct.body.price,
-          image: (typeof dataProduct.file != "undefined") ? "/images/products/" + dataProduct.file.originalname : dataProduct.body.image,
-          description: dataProduct.body.description,
-          quantity: dataProduct.body.quantity,
-          CategoryId: dataProduct.body.CategoryId,
-        },
-        {
-          where: { id: dataProduct.body.id },
-          returning: true,
-        }
-      );
-    
+    console.log("ass", dataProduct);
+    await db.Product.update(
+      {
+        name: dataProduct.body.name,
+        price: dataProduct.body.price,
+        image:
+          typeof dataProduct.file != "undefined"
+            ? "/images/products/" + dataProduct.file.originalname
+            : dataProduct.body.image,
+        description: dataProduct.body.description,
+        quantity: dataProduct.body.quantity,
+        CategoryId: dataProduct.body.CategoryId,
+      },
+      {
+        where: { id: dataProduct.body.id },
+        returning: true,
+      }
+    );
+
     let data = await db.Product.findOne({ where: { id: dataProduct.body.id } });
     return {
       success: true,
@@ -151,7 +156,7 @@ const updateNewProduct = async (dataProduct) => {
       product: data,
     };
   } catch (error) {
-    console.log("loi update",error);
+    console.log("loi update", error);
   }
 };
 
@@ -162,5 +167,5 @@ module.exports = {
   showDetailProduct,
   deleteProduct,
   getProductByName,
-  uploadIMG
+  uploadIMG,
 };

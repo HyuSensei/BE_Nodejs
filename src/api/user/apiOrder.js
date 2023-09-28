@@ -13,6 +13,9 @@ const order = async (req, res) => {
     );
     if (data.data.success !== false) {
       req.session.cart = null;
+      req.flash("success", `${data.data.message}`);
+    } else {
+      req.flash("erro", `${data.data.message}`);
     }
     console.log(data.data);
     return res.redirect("/viewCart");
@@ -65,6 +68,7 @@ const getOrderComplete = async (req, res) => {
       return res.render("user/order_complete.ejs", {
         orders: data.data.order,
         lastProduct: data.data.lastProduct,
+        countCheck: data.data.countCheck,
       });
     }
   } catch (error) {
@@ -74,16 +78,19 @@ const getOrderComplete = async (req, res) => {
 
 const getOrderRate = async (req, res) => {
   try {
+    let erro = req.flash("erro");
     let userId = req.params.userId;
     let orderId = req.params.orderId;
     let data = await axios.get(
       `http://localhost:8081/api/v1/orderRate/${userId}/${orderId}`
     );
-    console.log(data.data.checkRated);
+    console.log("CheckRated:", data.data.checkRated);
     if (data.data.success === true) {
       return res.render("user/rate.ejs", {
         orders: data.data.orders,
         checkRated: data.data.checkRated,
+        countCheck: data.data.countCheck,
+        erro,
       });
     }
   } catch (error) {

@@ -27,6 +27,11 @@ const handleOrder = async (req, res) => {
           req.body.UserId
         );
         return res.json(data);
+      } else {
+        return res.json({
+          success: false,
+          message: "Hiện tại website SkinLeLe chưa hỗ trợ thanh toán VNPAY",
+        });
       }
     }
   }
@@ -70,8 +75,14 @@ const orderShip = async (req, res) => {
 
 const orderComplete = async (req, res) => {
   let listLastProduct = [];
+  let listCount = [];
   let lastProduct = null;
   let data = await orderService.getOrderComplete(req.params.UserId);
+  let dataOrderAll = await orderService.getOrderAll();
+  for (const itemOrderAll of dataOrderAll) {
+    let count = await orderService.countOrderRate(itemOrderAll.id);
+    listCount.push(count);
+  }
   for (const itemOrder of data) {
     let checkOrderProduct = await orderService.checkMaxOrder(itemOrder.id);
     if (checkOrderProduct.ProductId === itemOrder["Order_Products.ProductId"]) {
@@ -83,10 +94,12 @@ const orderComplete = async (req, res) => {
     success: true,
     order: data,
     lastProduct: listLastProduct,
+    countCheck: listCount,
   });
 };
 
 const viewRateOrder = async (req, res) => {
+  let listCount = [];
   let dataOrder = {
     userId: req.params.userId,
     orderId: req.params.orderId,
@@ -101,10 +114,16 @@ const viewRateOrder = async (req, res) => {
     let result = await rateService.checkRated(dataCheck);
     checkRatedData.push(...result);
   }
+  let dataOrderAll = await orderService.getOrderAll();
+  for (const itemOrderAll of dataOrderAll) {
+    let count = await orderService.countOrderRate(itemOrderAll.id);
+    listCount.push(count);
+  }
   return res.json({
     success: true,
     orders: data,
     checkRated: checkRatedData,
+    countCheck: listCount,
   });
 };
 
