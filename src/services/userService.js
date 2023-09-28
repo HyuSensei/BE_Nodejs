@@ -18,6 +18,7 @@ const detailUser = async (dataUser) => {
     let data = await db.User.findOne({
       where: { id: dataUser },
     });
+    //console.log("a",data);
     return data;
   } catch (error) {
     console.log(error);

@@ -100,6 +100,7 @@ const checkPremission = async (req, res, next) => {
     raw: true,
     nest: true,
   });
+  
   if (user.Role.name === "Admin" || user.Role.name === "SuperAdmin") {
     next();
   } else {
