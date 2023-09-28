@@ -90,6 +90,12 @@ const checkPremission = async (req, res, next) => {
   //if (nonSercurePath.includes(req.path)) return next();
   let cookie = req.cookies;
   let token = cookie.jwt;
+  if (!token) {
+    return res.render("success.ejs", {
+      message: "vui long dang nhap",
+      url: "/",
+    });
+  }
   let decoded = verifyToken(token);
   let idUser = decoded.id;
   let user = await db.User.findOne({

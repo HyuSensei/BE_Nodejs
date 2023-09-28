@@ -8,7 +8,7 @@ const categoryController = require("../controllers/categoryController");
 const roleController = require("../controllers/roleController");
 const orderController = require("../controllers/orderController");
 const rateController = require("../controllers/rateController");
-
+const order_productController = require("../controllers/order_productController")
 const middleware = require("../middleware/JWTAction");
 const upload = require("../middleware/UploadImg");
 
@@ -36,6 +36,7 @@ router.post("/products/getbyname", productController.getProductByName);
 
 
 router.get("/categories", categoryController.indexCategory);
+router.get("/categories/sale", categoryController.getCategoriesSale);
 
 
 router.get("/role", roleController.indexRole);
@@ -54,5 +55,9 @@ router.get("/orderComplete/:UserId", orderController.orderComplete);
 router.get("/orderRate/:userId/:orderId", orderController.viewRateOrder);
 router.post("/rateOrder", rateController.handleRate);
 router.get("/updateStatusOrder/:orderId", orderController.updateStatus);
+
+
+// order product desc
+router.get("/order_product/desc", order_productController.getAllByDESC);
 
 module.exports = router;
