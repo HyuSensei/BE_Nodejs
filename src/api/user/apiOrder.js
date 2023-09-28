@@ -1,5 +1,5 @@
 const axios = require("axios");
-
+require("dotenv").config();
 const order = async (req, res) => {
   try {
     let dataOrder = {
@@ -7,10 +7,7 @@ const order = async (req, res) => {
       user: req.body,
       cart: req.session.cart,
     };
-    let data = await axios.post(
-      `http://localhost:8081/api/v1/order`,
-      dataOrder
-    );
+    let data = await axios.post(process.env.BASE_URL + `order`, dataOrder);
     if (data.data.success !== false) {
       req.session.cart = null;
       req.flash("success", `${data.data.message}`);
@@ -27,9 +24,7 @@ const order = async (req, res) => {
 const getOrderConfirm = async (req, res) => {
   try {
     let UserId = req.params.UserId;
-    let data = await axios.get(
-      `http://localhost:8081/api/v1/orderConfirm/${UserId}`
-    );
+    let data = await axios.get(process.env.BASE_URL + `orderConfirm/${UserId}`);
     if (data.data.success !== false) {
       return res.render("user/order_wait.ejs", {
         orders: data.data.order,
@@ -44,9 +39,7 @@ const getOrderConfirm = async (req, res) => {
 const getOrderShip = async (req, res) => {
   try {
     let UserId = req.params.UserId;
-    let data = await axios.get(
-      `http://localhost:8081/api/v1/orderShip/${UserId}`
-    );
+    let data = await axios.get(process.env.BASE_URL + `orderShip/${UserId}`);
     if (data.data.success !== false) {
       return res.render("user/order_ship.ejs", {
         orders: data.data.order,
@@ -62,7 +55,7 @@ const getOrderComplete = async (req, res) => {
   try {
     let UserId = req.params.UserId;
     let data = await axios.get(
-      `http://localhost:8081/api/v1/orderComplete/${UserId}`
+      process.env.BASE_URL + `orderComplete/${UserId}`
     );
     if (data.data.success !== false) {
       return res.render("user/order_complete.ejs", {
@@ -82,7 +75,7 @@ const getOrderRate = async (req, res) => {
     let userId = req.params.userId;
     let orderId = req.params.orderId;
     let data = await axios.get(
-      `http://localhost:8081/api/v1/orderRate/${userId}/${orderId}`
+      process.env.BASE_URL + `orderRate/${userId}/${orderId}`
     );
     console.log("CheckRated:", data.data.checkRated);
     if (data.data.success === true) {
@@ -103,7 +96,7 @@ const updateStatusOrder = async (req, res) => {
     let userId = req.cookies.UserId;
     let orderId = req.params.orderId;
     let data = await axios.get(
-      `http://localhost:8081/api/v1/updateStatusOrder/${orderId}`
+      process.env.BASE_URL + `updateStatusOrder/${orderId}`
     );
     if (data.data.success === true) {
       return res.redirect(`/orderShip/${userId}`);
