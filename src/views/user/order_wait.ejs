@@ -109,44 +109,48 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <% lastProduct.forEach(function(item) {
-                                            if(item===order["Order_Products.ProductId"]) { %>
-                                            <div style="margin-top: 20px;margin-bottom: 30px" class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-5">
-                                                        <div style="font-size: 13px;color:#65bebc"></div>
-                                                        <div style="font-size: 13px;color:#ee4d2d">Hình thức
-                                                            thanh toán:
-                                                            <%= order.payment %>
+                                        <% let lastProductHandled=false; %>
+                                            <% lastProduct.forEach(function(item) {
+                                                if(item===order["Order_Products.ProductId"] && !lastProductHandled) { %>
+                                                <div style="margin-top: 20px;margin-bottom: 30px"
+                                                    class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-5">
+                                                            <div style="font-size: 13px;color:#65bebc"></div>
+                                                            <div style="font-size: 13px;color:#ee4d2d">Hình thức
+                                                                thanh toán:
+                                                                <%= order.payment %>
+                                                            </div>
+                                                            <div style="font-size: 11px;">Vui lòng bấm đã nhận
+                                                                hàng khi sản
+                                                                phẩm được giao tới và sản phẩm không vấn đề gì.
+                                                            </div>
                                                         </div>
-                                                        <div style="font-size: 11px;">Vui lòng bấm đã nhận
-                                                            hàng khi sản
-                                                            phẩm được giao tới và sản phẩm không vấn đề gì.
+                                                        <div class="col-2">
+                                                            <p style="color:#820813; ">
+                                                                <% order.total=order.total.toLocaleString('vi-VN') %>
+                                                                    Thành tiền: <%= order.total %> đ
+                                                            </p>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <p style="color:#820813; ">
-                                                            <% order.total=order.total.toLocaleString('vi-VN') %>
-                                                                Thành tiền: <%= order.total %> đ
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-5">
-                                                        <button
-                                                            style="font-size: 15px;margin-left: 10px;background-color: white;color: gray"
-                                                            type="button" class="btn btn-info">Liên Hệ</button>
+                                                        <div class="col-5">
+                                                            <button
+                                                                style="font-size: 15px;margin-left: 10px;background-color: white;color: gray"
+                                                                type="button" class="btn btn-info">Liên Hệ</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <% } %>
-                                                <% }); %>
-                                                    <% }); %>
-                                                        <% } else { %>
-                                                            <div class="container">
-                                                                <p style="font-size: 20px;font-weight: bold;">Chưa
-                                                                    có đơn hàng chờ xác nhận</p>
-                                                            </div>
-                                                            <% } %>
+                                                <hr>
+                                                <% lastProductHandled=true; %>
+                                                    <% } %>
+                                                        <% }); %>
+                                                            <% }); %>
+                                                                <% } else { %>
+                                                                    <div class="container">
+                                                                        <p style="font-size: 20px;font-weight: bold;">
+                                                                            Chưa
+                                                                            có đơn hàng chờ xác nhận</p>
+                                                                    </div>
+                                                                    <% } %>
                                 </div>
                             </div>
                         </div>

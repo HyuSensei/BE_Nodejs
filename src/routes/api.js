@@ -16,6 +16,8 @@ const upload = require("../middleware/UploadImg");
 
 router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
+router.post("/loginAdmin", authController.loginAdmin);
+router.get("/logoutAdmin", authController.logoutAdmin);
 router.get("/logout", authController.logoutUser);
 
 router.get("/users", userController.indexUser);
@@ -55,9 +57,11 @@ router.get("/orderComplete/:UserId", orderController.orderComplete);
 router.get("/orderRate/:userId/:orderId", orderController.viewRateOrder);
 router.post("/rateOrder", rateController.handleRate);
 router.get("/updateStatusOrder/:orderId", orderController.updateStatus);
-
-
+router.get("/updateStatusOrder/confirm/:orderId", orderController.handConfirm);
+router.delete("/deleteOrder/:orderId", orderController.deleteOrder);
 // order product desc
 router.get("/order_product/desc", order_productController.getAllByDESC);
+router.get("/order_product", order_productController.getAll);
+router.get("/starDetailProdouct/:productId", rateController.getRate);
 
 module.exports = router;

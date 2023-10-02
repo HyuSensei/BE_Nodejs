@@ -1,5 +1,5 @@
 const axios = require("axios");
-
+require("dotenv").config();
 const order = async (req, res) => {
   try {
     let dataOrder = {
@@ -7,12 +7,12 @@ const order = async (req, res) => {
       user: req.body,
       cart: req.session.cart,
     };
-    let data = await axios.post(
-      `http://localhost:8081/api/v1/order`,
-      dataOrder
-    );
+    let data = await axios.post(process.env.BASE_URL + `order`, dataOrder);
     if (data.data.success !== false) {
       req.session.cart = null;
+      req.flash("success", `${data.data.message}`);
+    } else {
+      req.flash("erro", `${data.data.message}`);
     }
     console.log(data.data);
     return res.redirect("/viewCart");
@@ -24,9 +24,7 @@ const order = async (req, res) => {
 const getOrderConfirm = async (req, res) => {
   try {
     let UserId = req.params.UserId;
-    let data = await axios.get(
-      `http://localhost:8081/api/v1/orderConfirm/${UserId}`
-    );
+    let data = await axios.get(process.env.BASE_URL + `orderConfirm/${UserId}`);
     if (data.data.success !== false) {
       return res.render("user/order_wait.ejs", {
         orders: data.data.order,
@@ -41,9 +39,7 @@ const getOrderConfirm = async (req, res) => {
 const getOrderShip = async (req, res) => {
   try {
     let UserId = req.params.UserId;
-    let data = await axios.get(
-      `http://localhost:8081/api/v1/orderShip/${UserId}`
-    );
+    let data = await axios.get(process.env.BASE_URL + `orderShip/${UserId}`);
     if (data.data.success !== false) {
       return res.render("user/order_ship.ejs", {
         orders: data.data.order,
@@ -59,12 +55,13 @@ const getOrderComplete = async (req, res) => {
   try {
     let UserId = req.params.UserId;
     let data = await axios.get(
-      `http://localhost:8081/api/v1/orderComplete/${UserId}`
+      process.env.BASE_URL + `orderComplete/${UserId}`
     );
     if (data.data.success !== false) {
       return res.render("user/order_complete.ejs", {
         orders: data.data.order,
         lastProduct: data.data.lastProduct,
+        countCheck: data.data.countCheck,
       });
     }
   } catch (error) {
@@ -74,16 +71,19 @@ const getOrderComplete = async (req, res) => {
 
 const getOrderRate = async (req, res) => {
   try {
+    let erro = req.flash("erro");
     let userId = req.params.userId;
     let orderId = req.params.orderId;
     let data = await axios.get(
-      `http://localhost:8081/api/v1/orderRate/${userId}/${orderId}`
+      process.env.BASE_URL + `orderRate/${userId}/${orderId}`
     );
-    console.log(data.data.checkRated);
+    console.log("CheckRated:", data.data.checkRated);
     if (data.data.success === true) {
       return res.render("user/rate.ejs", {
         orders: data.data.orders,
         checkRated: data.data.checkRated,
+        countCheck: data.data.countCheck,
+        erro,
       });
     }
   } catch (error) {
@@ -96,7 +96,7 @@ const updateStatusOrder = async (req, res) => {
     let userId = req.cookies.UserId;
     let orderId = req.params.orderId;
     let data = await axios.get(
-      `http://localhost:8081/api/v1/updateStatusOrder/${orderId}`
+      process.env.BASE_URL + `updateStatusOrder/${orderId}`
     );
     if (data.data.success === true) {
       return res.redirect(`/orderShip/${userId}`);

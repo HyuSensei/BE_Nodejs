@@ -77,67 +77,75 @@
                         </div>
                     </div>
                 </div>
+                <% if(erro.length>0) { %>
+                    <div>
+                        <p
+                            style="width: 80%;padding-top: 12px;background-color: #f2dede;color:#b55947;margin-bottom: 20px;height: 50px;border-radius: 10px;padding-left: 10px;font-size: 16px;">
+                            <%= erro %>
+                        </p>
+                    </div>
+                    <% } %>
             </div>
         </div>
         <section class="product-details spad">
             <div class="container" style="font-size: 25px;margin-bottom: 40px;">ĐÁNH GIÁ SẢN PHẨM</div>
             <% if(orders.length>0) { %>
                 <% orders.forEach(function(order) { %>
-                    <% const productExistsInOrder=orders.includes(order['Order_Products.ProductId']); %>
-                        <% const productExistsInRate=checkRated.includes(order['Order_Products.ProductId']); %>
-                            <% const orderExistsIn=orders.includes(order.id); %>
-                                <% const orderExistsInRate=checkRated.includes(order.id); %>
-                                    <% if(productExistsInOrder && !productExistsInRate && orderExistsInRate &&
-                                        orderExistsIn && checkRated.length===0 ) { %>
-                                        <div class="container">
-                                            <div style="margin-bottom: 30px" class="row">
-                                                <div class="col-2">
-                                                    <img src="<%= order['Order_Products.Product.image'] %>" alt=""
-                                                        width="140px">
-                                                </div>
-                                                <div class="col-10">
-                                                    <p>
-                                                        <%= order['Order_Products.Product.name'] %>
-                                                    </p>
-                                                    <form action="/rateOrderAction" method="POST">
-                                                        <input type="text" name="ProductId"
-                                                            value="<%= order['Order_Products.ProductId'] %>" hidden>
-                                                        <input type="text" name="UserId" value="<%= UserId %>" hidden>
-                                                        <input type="text" name="OrderId" value="<%= order.id %>"
-                                                            hidden>
-                                                        <div class="rating">
-                                                            <input type="radio" id="star5" name="rating"
-                                                                value="5" /><label class="full" for="star5"
-                                                                title="Awesome - 5 stars"></label>
-                                                            <input type="radio" id="star4" name="rating"
-                                                                value="4" /><label class="full" for="star4"
-                                                                title="Pretty good - 4 stars"></label>
-                                                            <input type="radio" id="star3" name="rating"
-                                                                value="3" /><label class="full" for="star3"
-                                                                title="Meh - 3 stars"></label>
-                                                            <input type="radio" id="star2" name="rating"
-                                                                value="2" /><label class="full" for="star2"
-                                                                title="Kinda bad - 2 stars"></label>
-                                                            <input type="radio" id="star1" name="rating"
-                                                                value="1" /><label class="full" for="star1"
-                                                                title="Sucks big time - 1 star"></label>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <textarea style="font-size:14px" class="form-control"
-                                                                rows="7" id="comment" name="comment"
-                                                                placeholder="Nhập ghi chú đánh giá..."></textarea>
-                                                        </div>
-                                                        <br>
-                                                        <button type="submit" style="font-size:14px"
-                                                            class="btn btn-secondary">Đánh
-                                                            giá</button>
-                                                        <hr>
-                                                    </form>
-                                                </div>
+                    <% const productExistsInRate=checkRated.some(item=> item.ProductId ===
+                        order['Order_Products.ProductId']); %>
+                        <% if (!productExistsInRate) { %>
+                            <div class="container">
+                                <div style="margin-bottom: 30px" class="row">
+                                    <div class="col-2">
+                                        <img src="<%= order['Order_Products.Product.image'] %>" alt="" width="140px">
+                                    </div>
+                                    <div class="col-10">
+                                        <p>
+                                            <%= order['Order_Products.Product.name'] %>
+                                        </p>
+                                        <form action="/rateOrderAction" method="POST">
+                                            <input type="text" name="ProductId"
+                                                value="<%= order['Order_Products.ProductId'] %>" hidden>
+                                            <input type="text" name="UserId" value="<%= UserId %>" hidden>
+                                            <input type="text" name="OrderId" value="<%= order.id %>" hidden>
+                                            <div class="rating">
+                                                <input type="radio" id="star5" name="rating" value="5" /><label
+                                                    class="full" for="star5" title="Awesome - 5 stars"></label>
+                                                <input type="radio" id="star4" name="rating" value="4" /><label
+                                                    class="full" for="star4" title="Pretty good - 4 stars"></label>
+                                                <input type="radio" id="star3" name="rating" value="3" /><label
+                                                    class="full" for="star3" title="Meh - 3 stars"></label>
+                                                <input type="radio" id="star2" name="rating" value="2" /><label
+                                                    class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" /><label
+                                                    class="full" for="star1" title="Sucks big time - 1 star"></label>
                                             </div>
-                                        </div>
-                                        <% } %>
-                                            <% }); %>
+                                            <div class="form-group">
+                                                <textarea style="font-size:14px" class="form-control" rows="7"
+                                                    id="comment" name="comment" placeholder="Nhập ghi chú đánh giá..."
+                                                    required></textarea>
+                                            </div>
+                                            <br>
+                                            <button type="submit" style="font-size:14px" class="btn btn-secondary">Đánh
+                                                giá</button>
+                                            <hr>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% }); %>
+                                    <% const allOrdersRated=orders.every(order=> {
+                                        return checkRated.some(item => item.ProductId ===
+                                        order['Order_Products.ProductId']);
+                                        }); %>
+                                        <% if (allOrdersRated) { %>
+                                            <div class="container">
+                                                <p style="font-size: 20px;font-weight: bold;">Đơn hàng đã đánh giá cảm
+                                                    ơn quý khách <i style="color:red;" class="fa-solid fa-heart"></i>
+                                                </p>
+                                            </div>
+                                            <% } %>
                                                 <% } %>
 
         </section>

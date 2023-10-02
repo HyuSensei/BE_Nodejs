@@ -23,6 +23,26 @@ const getAllByDESC = async () => {
         console.log(error);
     }
 };
+const getAll = async () => {
+    try {
+        let data = await db.Order.findAll({
+            include: [
+                {
+                    model: db.Order_Product,
+                    include: [{ model: db.Product }],
+                },
+            ],
+        });
+        return {
+            success: true,
+            message: `tim thanh cong`,
+            data: data,
+        };
+    } catch (error) {
+        console.log(error);
+    }
+};
 module.exports = {
     getAllByDESC,
+    getAll
 };

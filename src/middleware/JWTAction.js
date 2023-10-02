@@ -89,11 +89,11 @@ const checkLoginUser = async (req, res) => {
 const checkPremission = async (req, res, next) => {
   //if (nonSercurePath.includes(req.path)) return next();
   let cookie = req.cookies;
-  let token = cookie.jwt;
+  let token = cookie.jwtadmin;
   if (!token) {
     return res.render("success.ejs", {
-      message: "vui long dang nhap",
-      url: "/",
+      message: "vui long dang nhap vào trang admin",
+      url: "/loginAdmin",
     });
   }
   let decoded = verifyToken(token);
@@ -111,7 +111,7 @@ const checkPremission = async (req, res, next) => {
     next();
   } else {
     return res.render("success.ejs", {
-      message: "bạn không có quyền truy cập",
+      message: "Bạn không có quyền truy cập trang Admin",
       url: "/",
     });
   }

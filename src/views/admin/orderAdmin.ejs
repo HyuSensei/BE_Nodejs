@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./block/header.ejs') %>
+
+    <body id="page-top">
+
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <%- include('./block/nav.ejs') %>
+                <!-- End of Sidebar -->
+
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
+
+                    <!-- Main Content -->
+                    <div id="content">
+
+                        <!-- Topbar -->
+                        <%- include('./block/topnav.ejs') %>
+                            <!-- End of Topbar -->
+
+                            <!-- Begin Page Content -->
+                            <div class="container-fluid">
+
+                                <!-- Page Heading -->
+                                <h1 class="h3 mb-2 text-gray-800">Danh đơn hàng</h1>
+
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3" style="text-align: center;">
+                                        
+
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%"
+                                                cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align: center;">Tên khách hàng</th>
+                                                        <th style="text-align: center;">Số điện thoại</th>
+                                                        <th style="text-align: center;">Địa chỉ</th>
+                                                        <th style="text-align: center;">Payment</th>
+                                                        <th style="text-align: center;">Thông tin đơn hàng</th>
+                                                        <th style="text-align: center; width: 20%;">Trạng thái đơn hàng</th>
+                                                        <th style="text-align: center; width: 10%;">Xóa đơn hàng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(typeof dataOrder !=='undefined' ){ %>
+                                                        <% dataOrder.forEach(order=> { %>
+
+                                                            <tr>
+                                                                <td><%= order.name %></td>
+                                                                <td><%= order.phone %></td>
+                                                                <td><%= order.address %></td>
+                                                                <td><%= order.payment %></td>
+                                                                <td>
+                                                                   
+                                                                    <% order.Order_Products.forEach(product=>{ %>
+                                                                        <li><%= product.Product.name %> (sl: <%= product.quantity %>)</li>
+                                                                    <% }) %>
+                                                                    <p style="text-align: right; margin-top: 1rem;">Tổng tiền: <%= order.total %> VNĐ </p>
+                                                                    
+                                                                </td>
+                                                                <td style="text-align: center;">
+                                                                    
+                                                                    <% if(order.status==2){  %>
+                                                                        <p style="color: rgba(0, 255, 170, 0.724);">Đã giao hàng</p>
+                                                                    <% }else if(order.status==1){ %>
+                                                                        <p style="color: yellowgreen;">Đang giao hàng</p>
+                                                                    <% }else if(order.status==0){ %>
+                                                                        <p>Chưa xác nhận</p>
+                                                                        <a href="/admin/order/confirm/<%= order.id %>"><button type="button" class="btn btn-success">Xác nhận giao hàng</button></a>
+                                                                        
+                                                                    <% } %>
+                                                                    
+                                                                        
+                                                                    
+                                                                </td>
+                                                                
+                                                                
+                                                                <td style="text-align: center;">
+                                                                    <a href="/admin/order/delete/<%= order.id %>">
+                                                                        <button type="button"
+                                                                            style="border: none; background-color: transparent; width: auto;"
+                                                                            id="btn2"
+                                                                            onclick="return confirm('Bạn có muốn xóa đơn hàng này không')">
+                                                                            <i style="color:  #858796;"
+                                                                                class="fas fa-trash"></i>
+                                                                        </button>
+                                                                    </a>
+
+                                                                </td>
+                                                            </tr>
+                                                            <% }); %>
+                                                                <% }%>
+
+                                                </tbody>
+
+                                            </table>
+                                            <% if(typeof message !=='undefined' ){ %>
+                                                <p style="width: 100%; text-align: center;">
+                                                    <%=message%>
+                                                </p>
+                                                <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.container-fluid -->
+
+                    </div>
+                    <!-- End of Main Content -->
+
+                    <!-- Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Your Website 2020</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+
+                </div>
+                <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal delete product -->
+        <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="deletemodalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deletemodalLabel">Thông báo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa sản phẩm này không
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteprd()">Xóa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('./block/footer.ejs') %>
+    </body>
+
+</html>

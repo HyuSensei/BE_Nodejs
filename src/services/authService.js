@@ -127,7 +127,67 @@ const handleUserLogin = async (dataLogin) => {
     console.log(error);
   }
 };
+const handleUserLoginAdmin = async (dataLogin) => {
+  try {
+    let user = await db.User.findOne({
+      where: { username: dataLogin.username },
+      include: {
+        model: db.Role,
+      },
+      raw: true,
+      nest: true,
+    });
+    if (!user) {
+      return {
+        success: false,
+        message: "Tên đăng nhập không tồn tại !",
+      };
+    } else {
+      let isPasswordExit = await checkPassword(
+        dataLogin.password,
+        user.password
+      );
+      if (!isPasswordExit) {
+        return {
+          success: false,
+          message: "Mật khẩu không đúng vui lòng kiểm tra lại !",
+        };
+      } else {
+        
+        //console.log(user)
+        if (user.Role.name === "Admin" || user.Role.name === "SuperAdmin") {
+          let dataUser = {
+            id: user.id,
+            name: user.name,
+          };
+          let userRes = {
+            id: user.id,
+            name: user.name,
+            username: user.username,
+            phone: user.phone,
+            address: user.address,
+          };
+          let token = JWTAction.createJWT(dataUser);
+          return {
+            success: true,
+            message: "Đăng nhập thành công !",
+            token: token,
+            user: userRes,
+          };
+        } else {
+          return {
+            success: false,
+            message: "Tài khoản của bạn không có quyền truy cập trang admin !",
+          };
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   registerNewUser,
   handleUserLogin,
+  handleUserLoginAdmin
 };
