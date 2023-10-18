@@ -7,6 +7,7 @@ const apiRate = require("../api/user/apiRate");
 const cartController = require("../controllers/cartController");
 const userController = require("../controllers/userController");
 const apiUser = require("../api/admin/apiUser");
+const apiOrderManagement = require("../api/admin/apiOrderManagement");
 
 const middleware = require("../middleware/JWTAction");
 const upload = require("../middleware/UploadImg");
@@ -43,7 +44,18 @@ router.get("/contact", (req, res) => {
 router.get("/detail/:id", apiProduct.getProductDetail);
 
 // admin
-
+router.get("/loginAdmin", apiAdmin.loginAdmin);
+router.post("/loginAdmin", apiAdmin.handleLoginAdmin);
+router.get("/logoutAdmin", (req, res) => {
+  res.cookie("jwtadmin", "", { maxAge: 0 });
+  res.cookie("adminUserId", "", { maxAge: 0 });
+  res.cookie("adminname", "", { maxAge: 0 });
+  res.cookie("adminemail", "", { maxAge: 0 });
+  res.cookie("adminphone", "", { maxAge: 0 });
+  res.cookie("adminusername", "", { maxAge: 0 });
+  res.cookie("adminaddress", "", { maxAge: 0 });
+  return res.redirect("/loginAdmin");
+});
 router.get("/admin", JWTAction.checkPremission, apiAdmin.getHome);
 //get all product
 router.get(
@@ -110,6 +122,14 @@ router.post(
   JWTAction.checkPremission,
   apiUser.UpdateUser
 );
+router.get("/admin/user/delete/:id", JWTAction.checkPremission, apiUser.deleteUser);
+router.post("/admin/user/", JWTAction.checkPremission, apiUser.getUserByUserName);
+router.get("/admin/user/update/:id", JWTAction.checkPremission, apiUser.getUpdateUser);
+router.post("/admin/user/update", JWTAction.checkPremission, apiUser.UpdateUser);
+//admin order
+router.get("/admin/order", JWTAction.checkPremission, apiOrderManagement.getOrderHome);
+router.get("/admin/order/confirm/:orderId", JWTAction.checkPremission, apiOrderManagement.confirmOrder);
+router.get("/admin/order/delete/:orderId", JWTAction.checkPremission, apiOrderManagement.deleteOrder);
 
 router.get("/addCart/:id", cartController.handleAddCart);
 router.get("/viewCart", (req, res) => {

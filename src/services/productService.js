@@ -124,6 +124,7 @@ const getProductByName = async (name) => {
         },
       },
     });
+    console.log(name)
     if (data.length > 0) {
       return {
         success: true,
@@ -164,23 +165,23 @@ const updateNewProduct = async (dataProduct) => {
     console.log("ass", dataProduct);
     await db.Product.update(
       {
-        name: dataProduct.body.name,
-        price: dataProduct.body.price,
+        name: dataProduct.name,
+        price: dataProduct.price,
         image:
           typeof dataProduct.file != "undefined"
             ? "/images/products/" + dataProduct.file.originalname
-            : dataProduct.body.image,
-        description: dataProduct.body.description,
-        quantity: dataProduct.body.quantity,
-        CategoryId: dataProduct.body.CategoryId,
+            : dataProduct.image,
+        description: dataProduct.description,
+        quantity: dataProduct.quantity,
+        CategoryId: dataProduct.CategoryId,
       },
       {
-        where: { id: dataProduct.body.id },
+        where: { id: dataProduct.id },
         returning: true,
       }
     );
 
-    let data = await db.Product.findOne({ where: { id: dataProduct.body.id } });
+    let data = await db.Product.findOne({ where: { id: dataProduct.id } });
     return {
       success: true,
       message: "Update sản phẩm thành công",
@@ -188,6 +189,43 @@ const updateNewProduct = async (dataProduct) => {
     };
   } catch (error) {
     console.log("loi update", error);
+  }
+};
+const countProduct = async (dataProduct) => {
+  try {
+    let data = await db.Product.count();
+    return {
+      success: true,
+      message: `số lượng sản phẩm là`,
+      data: data,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: `khong có sản phẩm nào`,
+    };
+  }
+};
+const getProductLimit = async (currentPage) => {
+  try {
+    const limit = 6;
+    const offset = (currentPage - 1) * limit;
+    let data = await db.Product.findAll({
+      limit: limit,
+      offset: offset,
+    })
+    return {
+      success: true,
+      message: `tìm sản phẩm thành công`,
+      product: data,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: `khong có sản phẩm nào`,
+    };
   }
 };
 
@@ -200,4 +238,6 @@ module.exports = {
   getProductByName,
   uploadIMG,
   getProductCategory,
+  countProduct,
+  getProductLimit
 };

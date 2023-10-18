@@ -65,12 +65,35 @@ app.use((req, res, next) => {
     res.locals.phone = "";
     res.locals.address = "";
   }
+  if (
+    !req.cookies.adminUserId ||
+    !req.cookies.adminname ||
+    !req.cookies.adminusername ||
+    !req.cookies.adminemail ||
+    !req.cookies.adminphone ||
+    !req.cookies.adminaddress
+  ) {
+    res.locals.adminUserId = "";
+    res.locals.adminname = "";
+    res.locals.adminusername = "";
+    res.locals.adminemail = "";
+    res.locals.adminphone = "";
+    res.locals.adminaddress = "";
+  }
   res.locals.UserId = req.cookies.UserId;
   res.locals.name = req.cookies.name;
   res.locals.username = req.cookies.username;
   res.locals.email = req.cookies.email;
   res.locals.phone = req.cookies.phone;
   res.locals.address = req.cookies.address;
+
+  //admin
+  res.locals.adminUserId = req.cookies.adminUserId;
+  res.locals.adminname = req.cookies.adminname;
+  res.locals.adminusername = req.cookies.adminusername;
+  res.locals.adminemail = req.cookies.adminemail;
+  res.locals.adminphone = req.cookies.adminphone;
+  res.locals.adminaddress = req.cookies.adminaddress;
   next();
 });
 

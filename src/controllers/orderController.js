@@ -148,7 +148,16 @@ const updateStatus = async (req, res) => {
   let data = await orderService.handleupdate(req.params.orderId);
   return res.json(data);
 };
-
+const handConfirm = async (req, res) => {
+  //console.log(req.params.orderId)
+  let data = await orderService.handConfirm(req.params.orderId);
+  return res.json(data);
+};
+const deleteOrder = async (req, res) => {
+  //console.log(req.params.orderId)
+  let data = await orderService.deleteOrder(req.params.orderId);
+  return res.json(data);
+};
 module.exports = {
   handleOrder,
   orderConfirm,
@@ -160,4 +169,6 @@ module.exports = {
   getStatistics,
   getStatisticsByMonht,
   getStatisticsByYear,
+  handConfirm,
+  deleteOrder
 };

@@ -54,8 +54,33 @@ const logoutUser = (req, res) => {
   });
 };
 
+const loginAdmin = async (req, res) => {
+  try {
+    if (!req.body.username || !req.body.password) {
+      return res.json({
+        success: false,
+        message: "Vui lòng điền đầy đủ thông tin đăng nhập",
+      });
+    } else {
+      let data = await authService.handleUserLoginAdmin(req.body);
+      return res.json(data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+const logoutAdmin = (req, res) => {
+  res.cookie("jwtadmin", "", { maxAge: 0 });
+  res.cookie("adminUserId", "", { maxAge: 0 });
+  res.json({
+    success: true,
+    message: "Đăng xuất thành công !",
+  });
+};
 module.exports = {
   registerUser,
   loginUser,
   logoutUser,
+  loginAdmin,
+  logoutAdmin
 };

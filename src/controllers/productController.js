@@ -8,7 +8,7 @@ const indexProduct = async (req, res) => {
   return res.json(data);
 };
 const updateProduct = async (req, res) => {
-  console.log("kkk", req.body);
+  console.log("kkk",req.body)
   let data = await productService.updateNewProduct(req.body);
   return res.json(data);
 };
@@ -28,16 +28,10 @@ const showProduct = async (req, res) => {
 };
 
 const getProductByName = async (req, res) => {
-  let data = await productService.getProductByName(req.query.name);
+  let data = await productService.getProductByName(req.body.name);
   return res.json(data);
   // const name = req.query.name;
   // res.send(`Xin chào, ${name}!`);
-};
-
-const getProductCategory = async (req, res) => {
-  const page = req.params.page;
-  let data = await productService.getProductCategory(page);
-  return res.json(data);
 };
 
 module.exports = {
@@ -49,5 +43,4 @@ module.exports = {
   showProduct,
   indexProduct,
   getProductByName,
-  getProductCategory,
 };

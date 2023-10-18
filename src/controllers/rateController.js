@@ -26,8 +26,17 @@ const getRate = async (req, res) => {
     countStar: countStar,
   });
 };
+const getAllCountRate = async (req, res) => {
+  let countRate = await rateService.countAllRate();
+  return res.json({
+    success: true,
+    message: `tong so rate la: ${countRate}`,
+    countRate: countRate,
+  });
+};
 
 module.exports = {
   handleRate,
   getRate,
+  getAllCountRate
 };

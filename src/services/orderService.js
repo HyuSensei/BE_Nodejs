@@ -321,6 +321,40 @@ const handleupdate = async (dataUpdate) => {
   }
 };
 
+const handConfirm = async (dataUpdate) => {
+  try {
+    await db.Order.update(
+      {
+        status: 1,
+      },
+      {
+        where: { id: dataUpdate },
+      }
+    );
+    return {
+      success: true,
+      message: "Xác nhận giao hàng!",
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+const deleteOrder = async (dataDelete) => {
+  try {
+    await db.Order.destroy(
+      {
+        where: { id: dataDelete },
+      }
+    );
+    return {
+      success: true,
+      message: "Xóa thành công!",
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getOrder,
   getStatistics,
@@ -335,4 +369,6 @@ module.exports = {
   handleupdate,
   countOrderRate,
   getOrderAll,
+  handConfirm,
+  deleteOrder
 };
