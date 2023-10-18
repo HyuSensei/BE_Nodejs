@@ -12,8 +12,6 @@ const rateController = require("../controllers/rateController");
 const middleware = require("../middleware/JWTAction");
 const upload = require("../middleware/UploadImg");
 
-//router.all("*", middleware.checkLogin, middleware.checkPremission);
-
 router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
 router.get("/logout", authController.logoutUser);
@@ -30,13 +28,19 @@ router.post("/products/create", productController.storeProduct);
 router.get("/products", productController.indexProduct);
 router.get("/products/:id", productController.showProduct);
 router.post("/products/update", productController.updateProduct);
-router.post("/products/update", upload.single('image'), productController.updateProduct);
+router.post(
+  "/products/update",
+  upload.single("image"),
+  productController.updateProduct
+);
 router.get("/products/delete/:id", productController.destroyProduct);
 router.post("/products/getbyname", productController.getProductByName);
-
+router.get(
+  "/products/category/page=:page",
+  productController.getProductCategory
+);
 
 router.get("/categories", categoryController.indexCategory);
-
 
 router.get("/role", roleController.indexRole);
 router.get("/role/:id", roleController.roleById);
@@ -46,7 +50,6 @@ router.get("/statistics", orderController.getStatistics);
 router.get("/statisticsByMonht", orderController.getStatisticsByMonht);
 router.get("/statisticsByYear", orderController.getStatisticsByYear);
 
-
 router.post("/order", orderController.handleOrder);
 router.get("/orderConfirm/:UserId", orderController.orderConfirm);
 router.get("/orderShip/:UserId", orderController.orderShip);
@@ -55,4 +58,5 @@ router.get("/orderRate/:userId/:orderId", orderController.viewRateOrder);
 router.post("/rateOrder", rateController.handleRate);
 router.get("/updateStatusOrder/:orderId", orderController.updateStatus);
 router.get("/starDetailProdouct/:productId", rateController.getRate);
+
 module.exports = router;

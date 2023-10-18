@@ -35,9 +35,9 @@ const loginUser = async (req, res) => {
       // res.cookie("UserId", data.user.id, {
       //   maxAge: 24 * 60 * 60 * 1000,
       // });
-      // res.cookie("jwt", data.token, {
-      //   maxAge: 24 * 60 * 60 * 1000,
-      // });
+      res.cookie("jwt", data.token, {
+        maxAge: 24 * 60 * 60 * 1000,
+      });
       return res.json(data);
     }
   } catch (error) {

@@ -87,7 +87,6 @@ const checkLoginUser = async (req, res) => {
 };
 
 const checkPremission = async (req, res, next) => {
-  //if (nonSercurePath.includes(req.path)) return next();
   let cookie = req.cookies;
   let token = cookie.jwt;
   let decoded = verifyToken(token);
@@ -100,7 +99,7 @@ const checkPremission = async (req, res, next) => {
     raw: true,
     nest: true,
   });
-  
+
   if (user.Role.name === "Admin" || user.Role.name === "SuperAdmin") {
     next();
   } else {
@@ -125,10 +124,27 @@ const requireLogin = (req, res, next) => {
   }
 };
 
+const requireLoginUserApi = (req, res, next) => {
+  let cookie = req.cookies;
+  if (cookie && cookie.jwt) {
+    let token = cookie.jwt;
+    let decoded = verifyToken(token);
+    if (decoded) {
+      next();
+    }
+  } else {
+    return res.json({
+      success: true,
+      message: "Vui lòng đăng nhập",
+    });
+  }
+};
+
 module.exports = {
   createJWT,
   verifyToken,
   checkPremission,
   checkLoginUser,
   requireLogin,
+  requireLoginUserApi,
 };

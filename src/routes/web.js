@@ -9,8 +9,8 @@ const userController = require("../controllers/userController");
 const apiUser = require("../api/admin/apiUser");
 
 const middleware = require("../middleware/JWTAction");
-const upload = require("../middleware/UploadImg")
-const JWTAction = require("../middleware/JWTAction")
+const upload = require("../middleware/UploadImg");
+const JWTAction = require("../middleware/JWTAction");
 const apiAdmin = require("../api/admin/apiAdmin");
 
 router.get("/", apiProduct.getProductHome1);
@@ -42,30 +42,74 @@ router.get("/contact", (req, res) => {
 
 router.get("/detail/:id", apiProduct.getProductDetail);
 
-
 // admin
 
 router.get("/admin", JWTAction.checkPremission, apiAdmin.getHome);
 //get all product
-router.get("/admin/product", JWTAction.checkPremission, apiProduct.getProductHome2);
+router.get(
+  "/admin/product",
+  JWTAction.checkPremission,
+  apiProduct.getProductHome2
+);
 //delete product
-router.get("/admin/product/delete/:id", JWTAction.checkPremission, apiProduct.deleteProduct);
+router.get(
+  "/admin/product/delete/:id",
+  JWTAction.checkPremission,
+  apiProduct.deleteProduct
+);
 //get product by name
-router.post("/admin/product", JWTAction.checkPremission, apiProduct.getProductByName);
+router.post(
+  "/admin/product",
+  JWTAction.checkPremission,
+  apiProduct.getProductByName
+);
 //edit product
-router.get("/admin/product/edit/:id", JWTAction.checkPremission, apiProduct.getProductDetail2);
-router.post("/admin/product/edit", JWTAction.checkPremission, upload.single('image') ,apiProduct.updateProduct);
+router.get(
+  "/admin/product/edit/:id",
+  JWTAction.checkPremission,
+  apiProduct.getProductDetail2
+);
+router.post(
+  "/admin/product/edit",
+  JWTAction.checkPremission,
+  upload.single("image"),
+  apiProduct.updateProduct
+);
 //create product
-router.get("/admin/product/create", JWTAction.checkPremission, apiProduct.getCreateProduct);
-router.post("/admin/product/create", JWTAction.checkPremission, upload.single('image'), apiProduct.createProduct);
-
+router.get(
+  "/admin/product/create",
+  JWTAction.checkPremission,
+  apiProduct.getCreateProduct
+);
+router.post(
+  "/admin/product/create",
+  JWTAction.checkPremission,
+  upload.single("image"),
+  apiProduct.createProduct
+);
 
 //crud user
 router.get("/admin/user", JWTAction.checkPremission, apiUser.getUserHome);
-router.get("/admin/user/delete/:id", JWTAction.checkPremission, apiUser.deleteUser);
-router.post("/admin/user/", JWTAction.checkPremission, apiUser.getUserByUserName);
-router.get("/admin/user/update/:id", JWTAction.checkPremission, apiUser.getUpdateUser);
-router.post("/admin/user/update", JWTAction.checkPremission, apiUser.UpdateUser);
+router.get(
+  "/admin/user/delete/:id",
+  JWTAction.checkPremission,
+  apiUser.deleteUser
+);
+router.post(
+  "/admin/user/",
+  JWTAction.checkPremission,
+  apiUser.getUserByUserName
+);
+router.get(
+  "/admin/user/update/:id",
+  JWTAction.checkPremission,
+  apiUser.getUpdateUser
+);
+router.post(
+  "/admin/user/update",
+  JWTAction.checkPremission,
+  apiUser.UpdateUser
+);
 
 router.get("/addCart/:id", cartController.handleAddCart);
 router.get("/viewCart", (req, res) => {
@@ -115,8 +159,5 @@ router.get(
 );
 
 router.get("/user", middleware.requireLogin, userController.showUser);
-
-
-
 
 module.exports = router;

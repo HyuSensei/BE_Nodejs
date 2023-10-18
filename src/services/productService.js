@@ -15,6 +15,37 @@ const indexGetProduct = async () => {
   }
 };
 
+const getProductCategory = async (page) => {
+  try {
+    if (page <= 0) {
+      return {
+        success: false,
+        message: `Không tìm thấy sản phẩm`,
+      };
+    }
+    const product_page = 2;
+
+    let { count, rows } = await db.Product.findAndCountAll({
+      offset: (page - 1) * product_page,
+      limit: product_page,
+    });
+    const totalPages = Math.ceil(count / product_page);
+    if (page == "" || page > totalPages) {
+      return {
+        success: false,
+        message: `Không tìm thấy sản phẩm`,
+      };
+    }
+    return {
+      success: true,
+      product: rows,
+      countPage: totalPages,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const uploadIMG = async (image) => {
   if (!image) {
     return res
@@ -168,4 +199,5 @@ module.exports = {
   deleteProduct,
   getProductByName,
   uploadIMG,
+  getProductCategory,
 };
