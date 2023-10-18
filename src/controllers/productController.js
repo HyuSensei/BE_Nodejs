@@ -7,8 +7,13 @@ const indexProduct = async (req, res) => {
   let data = await productService.indexGetProduct();
   return res.json(data);
 };
+
+const getProductCategory = async (req, res) => {
+  let data = await productService.getProductByName(req.params.page);
+  return res.json(data);
+};
 const updateProduct = async (req, res) => {
-  console.log("kkk",req.body)
+  console.log("kkk", req.body);
   let data = await productService.updateNewProduct(req.body);
   return res.json(data);
 };
@@ -33,7 +38,14 @@ const getProductByName = async (req, res) => {
   // const name = req.query.name;
   // res.send(`Xin chào, ${name}!`);
 };
-
+const getCountProduct = async (req, res) => {
+  let data = await productService.countProduct();
+  return res.json(data);
+};
+const getProductLimit = async (req, res) => {
+  let data = await productService.getProductLimit(req.params.currentPage);
+  return res.json(data);
+};
 module.exports = {
   storeProduct,
   updateProduct,
@@ -43,4 +55,7 @@ module.exports = {
   showProduct,
   indexProduct,
   getProductByName,
+  getProductCategory,
+  getCountProduct,
+  getProductLimit,
 };
