@@ -36,7 +36,8 @@ const getHome = async (req, res) => {
         let statisticsByYear = await axios.get(process.env.BASE_URL + `statisticsByYear`);
         let order_productDesc = await axios.get(process.env.BASE_URL + `order_product/desc`);
         let categoriesSale = await axios.get(process.env.BASE_URL + `categories/sale`);
-        //console.log("Data Statistics:", Statistics.data.data);
+        let countAllRate = await axios.get(process.env.BASE_URL + `allCountRate`);
+        //console.log("rate:", countAllRate.data.countRate);
         const Monht = formatVND(statisticsByMonht.data.data)
         const Year = formatVND(statisticsByYear.data.data)
         //console.log(categoriesSale.data.categories)
@@ -47,6 +48,7 @@ const getHome = async (req, res) => {
                 statisticsByYear: Year,
                 order_productDesc: order_productDesc.data.data,
                 categoriesSale: categoriesSale.data.categories,
+                countAllRate: countAllRate.data.countRate
             });
     } catch (error) {
         console.log(error);

@@ -47,8 +47,9 @@ const getProductDetail2 = async (req, res) => {
     let id = req.params.id;
     let data = await axios.get(process.env.BASE_URL + `products/${id}`);
     let data2 = await axios.get(process.env.BASE_URL + `categories`);
-    let product = data.data.product;
+    let product = data.data;
     let categories = data2.data.categories;
+    //console.log(data.data)
     if (data.data.success !== false) {
       return res.render("admin/editProduct.ejs", { product, categories });
     }
@@ -59,23 +60,16 @@ const getProductDetail2 = async (req, res) => {
 
 const getProductHome2 = async (req, res) => {
   try {
-    let cookie = req.cookies;
-    console.log("cookey", cookie.UserId);
-    if (typeof cookie.UserId == "undefined") {
-      return res.render("success.ejs", {
-        message: "vui lòng đăng nhập để vào trang",
-        url: "/",
-      });
-    }
+    
     //console.log("ssss:", process.env.BASE_URL + `products`)
-    let dataProducts = await axios.get(process.env.BASE_URL + `products`);
-    // console.log("Data:", dataProducts.data.data);
-
+    let dataProducts = await axios.get(process.env.BASE_URL + `prodouct/limit/1`);
+    let countProducts = await axios.get(process.env.BASE_URL + `prodouct/count`);
+    //console.log("Data:", countProducts.data.data);
     let products = dataProducts.data.product;
 
     return res.render("admin/productAdmin.ejs", {
       products: products,
-      cookie: cookie,
+      countProducts: countProducts.data.data,
     });
   } catch (error) {
     console.log(error);

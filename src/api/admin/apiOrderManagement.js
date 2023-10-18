@@ -3,7 +3,7 @@ require("dotenv").config();
 const getOrderHome = async (req, res) => {
     try {
         let dataOrder = await axios.get(process.env.BASE_URL + `order_product`);
-        console.log("Data order:", dataOrder.data.data);
+        //console.log("Data order:", dataOrder.data.data);
         return res.render("admin/orderAdmin.ejs", { dataOrder: dataOrder.data.data });
     } catch (error) {
         console.log(error);

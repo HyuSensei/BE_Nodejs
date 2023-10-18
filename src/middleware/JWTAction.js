@@ -90,10 +90,15 @@ const checkPremission = async (req, res, next) => {
   //if (nonSercurePath.includes(req.path)) return next();
   let cookie = req.cookies;
   let token = cookie.jwtadmin;
+  //console.log(token)
   if (!token) {
-    return res.render("success.ejs", {
-      message: "vui long dang nhap vào trang admin",
-      url: "/loginAdmin",
+    // return res.render("success.ejs", {
+    //   message: "vui long dang nhap vào trang admin",
+    //   url: "/loginAdmin",
+    // });
+    return res.json({
+      success: false,
+      message: "Vui lòng đăng voi role admin !",
     });
   }
   let decoded = verifyToken(token);

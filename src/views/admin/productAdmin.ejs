@@ -66,54 +66,11 @@
 
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <% if(typeof products !=='undefined' ){ %>
-                                                    <% products.forEach(product=> { %>
-
-                                                        <tr>
-                                                            <td>
-                                                                <%= product.name %>
-                                                            </td>
-                                                            <td style="text-align: center;">
-                                                                <%= product.price %>
-                                                            </td>
-                                                            <td style="text-align: center;">
-                                                                <%= product.quantity %>
-                                                            </td>
-
-                                                            <td style="text-align: center;">
-
-                                                                <a href="/admin/product/edit/<%=product.id%>">
-                                                                <button type="button"
-                                                                    style="border: none; background-color: transparent; width: auto;"
-                                                                    value="<%=product.id%>">
-                                                                    
-                                                                    <i style="color:  #858796;" class="fas fa-pen"></i>
-                                                                </button>
-                                                                </a>
-
-                                                            </td>
-                                                            <td style="text-align: center;">
-                                                                <a href="/admin/product/delete/<%=product.id%>">
-                                                                <button type="button"
-                                                                    style="border: none; background-color: transparent; width: auto;"
-                                        
-                                                                    id="btn2" value="<%=product.id%>"
-                                                                    onclick="return confirm('Bạn có muốn xóa sản phẩm này không')"
-                                                                >
-                                                                    <i style="color:  #858796;"
-                                                                        class="fas fa-trash"></i>
-                                                                </button>
-                                                                </a>
-
-                                                            </td>
-                                                        </tr>
-                                                        <% }); %>
-                                                            <% }%>
-
+                                            <tbody id="contentTable">
                                             </tbody>
 
                                         </table>
+                                        <div id="pagination" style="display: flex; justify-content: center; width: 100%;"></div>
                                         <% if(typeof message !=='undefined' ){ %>
                                             <p style="width: 100%; text-align: center;">
                                                 <%=message%>
@@ -121,6 +78,8 @@
                                             <% } %>
                                     </div>
                                 </div>
+                                
+
                             </div>
 
                         </div>
@@ -190,8 +149,99 @@
                 </div>
             </div>
         </div>
-        
+
         <%- include('./block/footer.ejs') %>
     </body>
+    <script>
+            const pageSize = 6;
+            const totalItems = <%= countProducts %>;
+            let currentPage = 1;
+            // Tạo nút phân trang
+            function createPaginationButtons() {
+                const totalPages = Math.ceil(totalItems / pageSize);
+                const paginationDiv = document.getElementById("pagination");
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement("button");
+                    button.textContent = i;
+                    button.className = "page-link";
+                    button.addEventListener("click", function () {
+                        currentPage = i;
+                        updateContent();
+                    });
+                    paginationDiv.appendChild(button);
+                }
+            }
+
+            // Cập nhật nội dung theo trang hiện tại
+            
+            
+            function updateContent() {
+                
+                const contentDiv = document.getElementById("contentTable");
+                contentDiv.innerHTML = ""; 
+                const apiUrl = "<%= process.env.BASE_URL %>"+`prodouct/limit/${currentPage}`;
+                //contentDiv.innerHTML = `Đang hiển thị trang ${currentPage}`;
+                fetch(apiUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        //console.log(data.product);
+                        for(i=0; i< data.product.length-1; i++){
+                            //console.log(data.product[i]);
+                            
+                            const tr = document.createElement("tr");
+                            const productItem = document.createElement("td");
+                            const price = document.createElement("td");
+                            const quantity = document.createElement("td");
+                            const setting = document.createElement("td");
+                            const updateURL = document.createElement("a");
+                            const upicon = document.createElement("i");
+                            upicon.className= "fas fa-pen";
+                            upicon.style.color = "#858796";
+                            setting.style.textAlign = "center"
+                            updateURL.appendChild(upicon);
+                            updateURL.href = `/admin/product/edit/${data.product[i].id}`;
+                            setting.appendChild(updateURL)
+
+                            const deleteItem = document.createElement("td");
+                            const deleteURL = document.createElement("a");
+                            const deleteicon = document.createElement("i");
+                            deleteicon.className = "fas fa-trash";
+                            deleteicon.style.color = "#858796";
+                            deleteicon.addEventListener("click", function (e) {
+                                const confirmation = confirm('Bạn có muốn xóa sản phẩm này không');
+                                if (!confirmation) {
+                                    e.preventDefault();
+                                }
+                            });
+                            deleteItem.style.textAlign = "center"
+                            deleteURL.appendChild(deleteicon);
+                            deleteURL.href = `/admin/product/delete/${data.product[i].id}`;
+                            deleteItem.appendChild(deleteURL)
+
+                            productItem.textContent = `${data.product[i].name}`;
+                            price.textContent = `${data.product[i].price}`;
+                            price.style.textAlign = "center"
+                            quantity.textContent = `${data.product[i].quantity}`;
+                            quantity.style.textAlign = "center"
+
+                            tr.appendChild(productItem);
+                            tr.appendChild(price);
+                            tr.appendChild(quantity);
+                            tr.appendChild(setting);
+                             tr.appendChild(deleteItem);
+                            contentDiv.appendChild(tr)
+                                                   
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Lỗi khi gọi API: " + error);
+                });
+                
+            }
+
+            createPaginationButtons();
+            updateContent();
+    </script>
 
 </html>

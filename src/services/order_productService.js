@@ -14,6 +14,7 @@ const getAllByDESC = async () => {
             group: ['product.name'],
             order: [[Sequelize.fn('SUM', Sequelize.col('Order_Product.quantity')), 'DESC']],
         });
+        //console.log(data.product.Product.name)
         return {
             success: true,
             message: `tim thanh cong`,

@@ -8,7 +8,7 @@ const indexProduct = async (req, res) => {
   return res.json(data);
 };
 const updateProduct = async (req, res) => {
-  console.log("kkk",req.body)
+  console.log("kkk",req.params)
   let data = await productService.updateNewProduct(req.body);
   return res.json(data);
 };
@@ -28,10 +28,18 @@ const showProduct = async (req, res) => {
 };
 
 const getProductByName = async (req, res) => {
-  let data = await productService.getProductByName(req.query.name);
+  let data = await productService.getProductByName(req.body.name);
   return res.json(data);
   // const name = req.query.name;
   // res.send(`Xin chào, ${name}!`);
+};
+const getCountProduct = async (req, res) => {
+  let data = await productService.countProduct();
+  return res.json(data);
+};
+const getProductLimit = async (req, res) => {
+  let data = await productService.getProductLimit(req.params.currentPage);
+  return res.json(data);
 };
 
 module.exports = {
@@ -43,4 +51,6 @@ module.exports = {
   showProduct,
   indexProduct,
   getProductByName,
+  getCountProduct,
+  getProductLimit
 };

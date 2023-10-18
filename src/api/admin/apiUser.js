@@ -58,6 +58,7 @@ const getUpdateUser = async (req, res) => {
         let getRole = await axios.get(process.env.BASE_URL + `role`);
         Role = getRole.data.Role
         data = dataUser.data
+        //console.log(dataUser.data)
         return res.render("admin/editUser.ejs", { dataUser: data, Role: Role })
         
     } catch (error) {
@@ -66,7 +67,7 @@ const getUpdateUser = async (req, res) => {
 }
 const UpdateUser = async (req, res) => {
     try {
-        //console.log(req.body)
+        console.log(req.body)
         let dataUser = await axios.post(process.env.BASE_URL + `users/update`, req.body);
         //console.log(dataUser.data.dataUser)
         if (dataUser.data.success !== false) {

@@ -117,11 +117,20 @@ const countStar = async (dataRate) => {
     console.log(error);
   }
 };
-
+const countAllRate = async () => {
+  try {
+    let data = await db.Rate.count();
+    console.log("So luot danh gia:", data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   rateOrder,
   getRateProduct,
   checkRated,
   countRate,
   countStar,
+  countAllRate
 };
